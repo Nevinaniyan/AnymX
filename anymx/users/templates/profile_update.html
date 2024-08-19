@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Update Profile
+{% endblock %}
+
+{% block content %}
+<style>
+.update-profile-cont{
+    display:flex;
+    justify-content:center;
+}
+
+.profile-update {
+    position:relative;
+    width: 800px;
+    height: 700px;
+    margin-top:80px;
+    color: white;
+    box-shadow: 0px 0px 20px black;
+    background: url("{% static 'videos/One punch man.gif' %}");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+
+.Avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+
+}
+
+.profile-item {
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.profile-update .btn-light {
+    background-color: white;
+    border-color: black;
+    color: black;
+    padding: 10px 10px;
+    font-size: 16px;
+    font-weight:bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+
+}
+
+.profile-update .btn-light:hover {
+    background-color: transparent;
+    border-color: grey;
+    color: white;
+
+    }
+
+.profile-update .form-control{
+    background:white;
+    padding-left: 2px;
+    border: 2px solid grey;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom:20px;
+
+
+}
+
+.profile-update .form-control:hover{
+    background: grey;
+
+    }
+
+.profile-update label{
+    margin-bottom:5px;
+    letter-spacing: 2px;
+
+    }
+
+</style>
+
+<body class="bg-dark">
+<div class="update-profile-cont">
+    <div class="profile-update">
+        <h2>Update Profile</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-item">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" class="Avatar" alt="Avatar">
+                {% else %}
+                    <p>No avatar uploaded.</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" value="{{ user.username }}" maxlength="150" required="" class="form-control" id="id_username">
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email address:</label>
+                <input type="email" name="email" value="{{ user.email }}" maxlength="254" class="form-control" id="id_email">
+            </div>
+            <div class="form-group">
+                <label for="id_avatar">Avatar:</label>
+                <input type="file" name="avatar" accept="image/*" class="form-control-file" id="id_avatar">
+                <div>
+                    <input type="checkbox" name="avatar-clear" id="avatar-clear_id">
+                    <label for="avatar-clear_id">Clear current avatar</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" required="" class="form-control" id="id_password">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-light">Update Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+{% endblock %}

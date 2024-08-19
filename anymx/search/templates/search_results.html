@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block content %}
+<style>
+    .pag3 a {
+        text-decoration: none;
+        color: white;
+    }
+    .pag3 a:visited {
+        color: purple;
+    }
+    .pag3 a:hover {
+        color: white;
+    }
+    .container h1{
+    font-family: 'Roboto', sans-serif;
+    font-size:20px;
+    font-style:italic;
+    }
+</style>
+
+<body class="bg-dark">
+    <div class="container">
+        <h1 class="text-center text-light m-4">Showing Top Search Results for <span class="text-danger">{{ form.cleaned_data.query }}</span></h1>
+        {% if results %}
+            <div class="row ms-4">
+                {% for anime in results %}
+                    <div class="col-md-3 mb-3 top-flex">
+                        <div class="card card_top border border-light border-1 rounded-1 anime1" style="width: 18rem;">
+                            <img src="{{ anime.images.jpg.image_url }}" alt="{{ anime.title }}" class="card-img-top" height="400px;">
+                            <div class="card-body content_top">
+                                <h5 class="card-title title_top">
+                                    {% if anime.title_english %}
+                                        {{ anime.title_english }}
+                                    {% else %}
+                                        {{ anime.title }}
+                                    {% endif %}
+                                </h5>
+                                <a href="{% url 'anime:details' anime.mal_id %}" class="btn btn-danger top_b-font">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">No results found.</p>
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-center align-items-center text-light mt-5">
+        <p>Page 1 of 1</p>
+    </div>
+</body>
+
+{% endblock %}

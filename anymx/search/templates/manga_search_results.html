@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Search</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:800,700&display=swap">
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<style>
+.offcanvas-header {
+        background-color: grey;
+    }
+
+.offcanvas-body {
+    background-color: #212529;
+}
+
+.offcanvas-title {
+    font-weight: bold;
+}
+
+
+.off-link {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.off-link:hover {
+    color: #ffc107;
+    transform: scale(1.05);
+}
+
+
+.offcanvas-body .p-2 {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+
+.offcanvas-body .p-2:hover {
+    background-color: #343a40;
+    border-radius: 5px;
+}
+
+
+.btn-close.btn-light.b1 {
+    filter: invert(1); /* Invert colors for the close button to match the light theme */
+}
+
+.nav-item1 a{
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.nav-item1 a:hover {
+    color: #FCDC94 !important;
+    transform: scale(1.25);
+}
+
+.but-search1 button:hover{
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+    background-color:white;
+    .gla{
+      transform: rotate(3600deg);
+      transition: transform 5s ease-in-out;
+    }
+}
+
+.pag1 a {
+    text-decoration: none;
+    color: white;
+}
+.pag1 a:visited {
+    color: purple;
+}
+.pag1 a:hover {
+    color: white;
+}
+
+    .pag3 a {
+        text-decoration: none;
+        color: white;
+    }
+    .pag3 a:visited {
+        color: purple;
+    }
+    .pag3 a:hover {
+        color: white;
+    }
+    .container h1{
+    font-family: 'Roboto', sans-serif;
+    font-size:20px;
+    font-style:italic;
+    }
+</style>
+
+<body class="bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <a class="btn btn-light me-4 mt-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-bars" style="font-size:40px;"></i></a>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header" style="background-color: grey;">
+                <h5 class="offcanvas-title text-light" id="offcanvasWithBothOptionsLabel">EXPLORE</h5>
+                <button type="button" class="btn-close btn-light b1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body bg-dark">
+                <div class="d-flex flex-column mb-3">
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:home' %}" class="nav-link off-link">Anime</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:top' %}" class="nav-link off-link">Top Animes</a>
+                    </div>
+
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:trending' %}" class="nav-link off-link">Trending Anime</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'manga:all_manga' %}" class="nav-link off-link">Manga</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:recom' %}" class="nav-link off-link">Recommendation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <a class="navbar-brand" href="{% url 'welcome' %}">
+          <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="100" height="80">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" style="margin-left:100px;" id="navbarSupportedContent">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
+           <li class="nav-item1">
+             <a class="nav-link active" style="color:#CA8787;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" aria-current="page" href="{% url 'anime:all_page' %}">HOME</a>
+           </li>
+
+           <li class="nav-item me-4">
+              <form class="but-search1 d-flex ms-4 mt-1 navbar-form" method="get" action="{% url 'search:manga_search' %}">
+                  <input class="form-control me-1" style="width:600px;" type="search" name="query" placeholder="Search" aria-label="Search">
+                  <button type="submit"><i class="fa-solid fa-magnifying-glass gla"></i></button>
+              </form>
+           </li>
+
+
+             {# method="get": This specifies that the form will use the GET method to submit data. The search term will be appended to the URL as a query parameter. #}
+
+             {# name="query": This gives the input field a name, which is necessary for Django to access the input value in the request.  #}
+
+
+            {% if user.is_authenticated %}
+            <li class="nav-item1 me-1">
+                <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:profile'%}">
+                       <span> PROFILE <i class="fa-solid fa-circle-user" style="color:grey;"></i></span>
+                </a>
+            </li>
+
+            <li class="nav-item1">
+                <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:logout' %}">LOGOUT</a>
+            </li>
+
+            {% else %}
+            <li class="nav-item1 me1">
+              <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:login' %}">Login</a>
+            </li>
+
+            <li class="nav-item1">
+              <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:register' %}">Register</a>
+            </li>
+
+        {% endif %}
+          </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid mar_foot">
+    <main role="main">
+
+
+<body class="bg-dark">
+    <div class="container">
+        <h1 class="text-center text-light m-4">Showing Top Search Results for <span class="text-danger">{{ form.cleaned_data.query }}</span></h1>
+        {% if result %}
+            <div class="row ms-4">
+                {% for manga in result %}
+                    <div class="col-md-3 mb-3 top-flex">
+                        <div class="card card_top border border-light border-1 rounded-1 anime1" style="width: 18rem;">
+                            <img src="{{ manga.images.jpg.image_url }}" alt="{{ manga.title }}" class="card-img-top" height="400px;">
+                            <div class="card-body content_top">
+                                <h5 class="card-title title_top">
+                                    {% if manga.title_english %}
+                                        {{ manga.title_english }}
+                                    {% else %}
+                                        {{ manga.title }}
+                                    {% endif %}
+                                </h5>
+                                <a href="{% url 'manga:manga_details' manga.mal_id %}" class="btn btn-danger top_b-font">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">No results found.</p>
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-center align-items-center text-light mt-5">
+        <p>Page 1 of 1</p>
+    </div>
+</body>
+
+
+    </main>
+
+    <div class="container-fluid mt-5 mb-4">
+        <a class="navbar-brand" href="{% url 'welcome' %}">
+            <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="90" height="70">
+        </a>
+        <span style="border-left: 2px solid #ccc; height: 20px; margin-right: 10px; box-sizing: border-box;"></span>
+        <a class="navbar-brand" href="#">
+            <i class="fa-brands fa-discord" style="color: #74C0FC;"></i>
+        </a>
+        <a class="navbar-brand" href="#">
+            <i class="fa-brands fa-instagram" style="color:#c43556;"></i>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm">
+                    <h2 style="display: inline-block; margin-right: 10px;">A-Z LIST</h2>
+                    <span style="border-left: 2px solid #ccc; height: 20px; margin-right: 10px;"></span>
+                    <span>Search anime by alphabet name A to Z.</span> <br>
+                    <div class="my-2">
+                        <a class="btn btn-secondary"><h4>0-9</h4></a>
+                        <a class="btn btn-secondary" style="height:51;padding:10px;"><h4><i class="fa-solid fa-hashtag"></i></h4></a>
+                        <a class="btn btn-secondary"><h4>A-Z</h4></a>
+                        <i class="fa-brands fa-searchengin fa-2xl ms-3"></i>
+                    </div>
+                    <div class="my-4">
+                        <a>Terms of Service</a> | <a>DMCA</a> | <a>Contact</a> | <a>anymX App</a>
+                    </div>
+                    <p class="foot_text mt-4">anymX does not store any files on our server. The files belong to the respective owner.</p>
+                    <p class="foot_text">&copy; anymX.com. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</body>
+</html>
+

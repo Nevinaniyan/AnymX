@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+<style>
+.profile-cont{
+    display:flex;
+    justify-content:center;
+}
+.profile {
+    position:relative;
+    width: 700px;
+    height: 600px;
+    margin-top:80px;
+    color: white;
+    box-shadow: 0px 0px 20px black;
+    background: url("{% static 'videos/gintama.gif' %}");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+
+.profile::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    z-index: 1;
+}
+
+.Avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.profile-item {
+    text-align: center;
+    margin-bottom: 10px;
+    z-index: 2;
+}
+
+.profile .btn-light {
+    background-color: white;
+    border-color: black;
+    color: black;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight:bold;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    z-index: 2;
+    width:190px;
+}
+
+.profile .btn-light:hover {
+    background-color: black;
+    border-color: grey;
+    color:white;
+    z-index: 2;
+</style>
+
+<body class="bg-dark">
+<div class="profile-cont">
+    <div class="profile">
+        {% if avatar %}
+            <img src="{{ avatar }}" class="Avatar" alt="Avatar">
+        {% else %}
+            <p>No avatar uploaded.</p>
+        {% endif %}
+        <div class="profile-item">
+            <h1>{{ username }}'s Profile</h1>
+            <p>Email: {{ user.email }}</p>
+        </div>
+
+        <div class="profile-item">
+            <a href="{% url 'favourites:favourites' %}"><button class="btn btn-light">View Favourites</button></a>
+        </div>
+
+        <div class="profile-item">
+            <a href="{% url 'watchlist:watchlist' %}"><button class="btn btn-light">View Watchlist</button></a>
+        </div>
+
+        <div class="profile-item">
+        <a href="{% url 'users:profile_update' %}"><button class="btn btn-light">Update Profile</button></a>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

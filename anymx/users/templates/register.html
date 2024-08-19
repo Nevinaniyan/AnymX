@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Register
+{% endblock %}
+{% block content %}
+<style>
+
+.register-cont {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Ensure the login form takes full vertical height */
+
+}
+.register{
+      border: 1px solid black;
+      width: 600px;
+      height: 700px;
+      background: url("{% static 'videos/One Piece GIF - One Piece - Discover & Share GIFs.gif' %}");
+      color:white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px black;
+      background-size: cover;
+      background-position: center;
+      overflow: auto;
+      padding:20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+}
+
+.register h2{
+  font-weight:bold;
+  text-shadow: 0px 0px 2px black;
+  margin-bottom:20px;
+  margin-top:40px;
+  justify-content:center;
+}
+
+.register form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register label{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-left: 10px;
+
+}
+
+#div_id_username{
+    margin-left: 20px;
+}
+
+.form-text{
+    color:white;
+}
+
+.register .form-control {
+    background: rgba(255, 255, 255, 0.6);
+    padding-left: 2px;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 12px;
+    width:400px;
+}
+
+.register .form-control:hover {
+    background: white;
+}
+.register .button1 {
+    background-color: white;
+    border-color: black;
+    color: black;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight:bold;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+.register .button1:hover {
+    background-color: transparent;
+    border-color: grey;
+    color:white;
+}
+</style>
+
+<body style="background-color:#76ABAE;">
+    <div class="register-cont">
+        <div class="register">
+          <h2>Register</h2>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy}}
+            <button type="submit" class="btn btn-light button1">Register</button>
+          </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

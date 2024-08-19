@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Anime Reviews
+{% endblock %}
+
+{% block content %}
+
+<style>
+    h2 {
+    font-size: 2.5rem;
+    color: #e2e2e2;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #ff4500;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+.list-group-item {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    border: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.list-group-item:hover {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    transform: scale(1.02);
+}
+
+
+h3 {
+    color: #ff6347;
+    font-size: 1.8rem;
+}
+
+p strong {
+    color: #ff6347;
+}
+
+
+.pagination .page-link {
+    color: #ffffff;
+    background-color: #1c1c1c;
+    border-color: #2e2e2e;
+}
+
+.pagination .page-link:hover {
+    background-color: #ff6347;
+    border-color: #ff4500;
+    color: #ffffff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff4500;
+    border-color: #ff4500;
+}
+
+
+
+
+</style>
+
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center" style="font-family: 'Roboto', sans-serif; font-weight: 700;">Reviews for <span style="font-style:italic;">{{ anime.title }}</span></h2>
+
+        {% if reviews %}
+            <ul class="list-group mb-4">
+                {% for review in reviews %}
+                    <li class="list-group-item bg-secondary text-light mb-3 p-4 rounded">
+                        <h3 class="mb-2" style="font-family: 'Roboto', sans-serif; font-weight: 500;">{{ review.user.username }}</h3>
+                        <p><strong>Score:</strong> {{ review.score }} / 10</p>
+                        <p>{{ review.review }}</p>
+                        <p class="text-muted"><small>Date: {{ review.date }}</small></p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    {% if reviews.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-light border-secondary" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo; First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-light border-secondary" href="?page={{ reviews.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo; Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link bg-dark text-light border-secondary">Page {{ reviews.number }} of {{ reviews.paginator.num_pages }}</span>
+                    </li>
+
+                    {% if reviews.has_next %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-light border-secondary" href="?page={{ reviews.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">Next &rsaquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-light border-secondary" href="?page={{ reviews.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">Last &raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                No reviews available for this anime.
+            </div>
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

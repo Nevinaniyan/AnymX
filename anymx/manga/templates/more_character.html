@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ manga.title }} - Characters
+{% endblock %}
+
+{% block content %}
+<style>
+    .character-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .character-link {
+        text-decoration: none;
+    }
+
+    .character-box {
+        background-color: #2b2b2b;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .character-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .character-img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .character-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        margin: 0;
+        text-decoration:none;
+    }
+
+    .more_character1 a{
+        text-decoration:none;
+        font-size:16px;
+        color:white;
+        font-weight:bold;
+        font-family: 'Roboto', sans-serif;
+        font-style:italic;
+        transition: transform 0.8s ease;
+    }
+
+    .more_character1 a:hover{
+        transform: scale(1.13);
+    }
+
+</style>
+
+<body class="bg-dark">
+<div class="container text-light">
+    <h1 class="text-center m-5" style="font-family:fantasy;font-style:italic;">{{ manga.title }} - Characters</h1>
+    <div class="row">
+        {% for character in characters %}
+            <div class="col-md-3 mb-3 character-container text-center">
+                <a href="{% url 'manga:character_details' character.character.mal_id %}">
+                    <div class="character-box">
+                        <img src="{{ character.character.images.jpg.image_url }}" alt="{{ character.character.name }}" class="character-img img-fluid rounded-circle" style="width: 200px; height: 200px;">
+                        <p class="character-name">{{ character.character.name }}</p>
+                     </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center text-center mt-3 more_character1">
+        <a href="{% url 'manga:manga_details' manga_id=manga.mal_id %}" class="text-center">Back to {{ manga.title }} >></a>
+    </div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Favourites
+{% endblock %}
+
+{% block content %}
+<style>
+.top-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.card_top {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease-in-out ;
+}
+
+.card_top:hover{
+    transform: scale(1.02);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s;
+}
+
+.content_top {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.card_top:hover .content_top {
+    opacity: 1;
+    bottom: 50px;
+}
+
+.card_top:hover img {
+    filter: brightness(0.6);
+}
+
+.title_top {
+    font-weight: bolder;
+    font-size: 22px;
+    font-family: 'Arial Black', Impact;
+    color: white;
+    -webkit-text-stroke: 0.8px black;
+}
+
+
+.buttons {
+    margin-top: 10px;
+}
+</style>
+
+<body class="bg-dark">
+<div class="container mt-5">
+    <h1 class="text-light">Favourites</h1>
+    <a href="{% url 'users:profile' %}" class="btn btn-primary mb-3 me-2">Back to Profile</a>
+    <a href="{% url 'favourites:empty_favourites' %}" class="btn btn-danger mb-3"><i class="fa fa-trash"></i> Empty Favourites</a>
+    <div class="row">
+        {% for anime in animes %}
+            <div class="col-md-3 mt-4 top-flex">
+                <div class="card mb-4 card_top">
+                    <img src="{{ anime.images.jpg.image_url }}" class="card-img-top" alt="{{ anime.title }}">
+                    <div class="card-body content_top">
+                        <h5 class="card-title title_top">{{ anime.title }}</h5>
+                        <div class="buttons">
+                            <a href="{% url 'favourites:remove' anime.mal_id %}" class="btn btn-danger mb-1" style="border-radius: 50%;"><i class="fa-solid fa-trash"></i></a>
+                             <a href="{% url 'anime:details' anime.mal_id %}" class="btn btn-primary mt-1" style="border-radius: 40%; margin-bottom:5px;"><i class="fa-solid fa-circle-info"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>
+</body>
+{% endblock %}

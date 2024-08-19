@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Episodes for Anime ID: {{ anime.title }}
+{% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        height:300px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: 0.3s;
+        transition: transform 0.8s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        transform: scale(1.02);
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .pagination {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .pagination a:hover {
+        background-color: #0056b3;
+    }
+
+    .episodes1 a{
+        text-decoration:none;
+        font-size:16px;
+        color:white;
+        font-weight:bold;
+        font-family: 'Roboto', sans-serif; font-style:italic;
+        transition: transform 0.8s ease;
+    }
+
+    .episodes1 a:hover{
+        transform: scale(1.13);
+    }
+</style>
+<body class="bg-dark">
+<div class="container">
+    <h1 class="mt-5 mb-2 text-light text-center" style="font-family: 'Roboto', sans-serif; font-style:italic;">
+        Episode details for {{ anime.title }}
+    </h1>
+    <div class="row">
+        {% for episode in episodes %}
+            <div class="col-md-3 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">{{ episode.title }}</h5>
+                        <p class="card-text">{{episode.title_japanese}}</p>
+                        <p class="card-text">Episode {{ episode.mal_id }}</p>
+                        <p class="card-text">Aired on: {{ episode.aired }}</p>
+                        <p class="card-text">Score: {{ episode.score }}</p>
+                        <p class="card-text">
+                        {% if episode.filler  %}
+                            Filler Episode
+                        {% else %}
+                            Canon Episode
+                        {% endif %}
+
+
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-md-12 text-center">
+                <p>No episodes available.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center text-center mt-5 episodes1">
+        <a href="{% url 'anime:details' anime.mal_id %}" class="text-center">Back to {{ anime.title }} >></a>
+    </div>
+</div>
+</body>
+{% endblock %}

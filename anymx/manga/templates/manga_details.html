@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:800,700&display=swap">
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<style>
+.offcanvas-header {
+        background-color: grey;
+    }
+
+.offcanvas-body {
+    background-color: #212529;
+}
+
+.offcanvas-title {
+    font-weight: bold;
+}
+
+
+.off-link {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.off-link:hover {
+    color: #ffc107;
+    transform: scale(1.05);
+}
+
+
+.offcanvas-body .p-2 {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+
+.offcanvas-body .p-2:hover {
+    background-color: #343a40;
+    border-radius: 5px;
+}
+
+
+.btn-close.btn-light.b1 {
+    filter: invert(1); /* Invert colors for the close button to match the light theme */
+}
+
+.nav-item1 a{
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.nav-item1 a:hover {
+    color: #FCDC94 !important;
+    transform: scale(1.25);
+}
+
+.but-search1 button:hover{
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+    background-color:white;
+    .gla{
+      transform: rotate(3600deg);
+      transition: transform 5s ease-in-out;
+    }
+}
+
+.pag1 a {
+    text-decoration: none;
+    color: white;
+}
+.pag1 a:visited {
+    color: purple;
+}
+.pag1 a:hover {
+    color: white;
+}
+
+
+
+    .detail-image img{
+    border-radius:5px;
+    height:400px;
+    transition: transform 0.5s ease-in-out;
+    }
+    .detail-image img:hover{
+    transform:scale(1.1);
+    }
+
+    .video-container {
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-container iframe {
+        display: block;
+        border: none;
+    }
+
+    .character-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .character-link {
+        text-decoration: none;
+    }
+
+    .character-box {
+        background-color: #2b2b2b;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px #7FA1C3;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .character-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px #021526;
+    }
+
+    .character-img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .character-name {
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        margin: 0;
+    }
+
+    .character-img:hover {
+        transform:scale(1.05);
+    }
+
+    .more_character a{
+        text-decoration:none;
+        font-size:16px;
+        color:white;
+        font-weight:bold;
+        font-family: 'Roboto', sans-serif; font-style:italic;
+        transition: transform 0.8s ease;
+    }
+
+    .more_character a:hover{
+        transform: scale(1.03);
+    }
+
+    .data-sec{
+        background-color:#232D3F;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .news-but1{
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        font-style: italic;
+        margin-top:60px;
+        transition: transform 1s ease;
+        font-size:38px;
+
+    }
+    .news-but1:hover{
+        transform: scale(1.02);
+    }
+    .news-but1 a{
+        text-decoration:none;
+        color:white;
+        i{
+        color:grey;
+        }
+    }
+    .but2{
+        font-family:'Roboto', sans-serif;
+        font-weight: bold;
+        font-style:italic;
+        transition:transform 0.8s ease;
+        font-size:15px;
+        a{
+         text-decoration:none;
+         color:white;
+        }
+    }
+    .but2:hover{
+        transform:scale(1.03);
+    }
+
+    .but3{
+        font-family:'Roboto', sans-serif;
+        font-weight: bold;
+        font-style:italic;
+        color:white;
+        transition: transform 0.3s ease;
+    }
+
+    .but3 a:hover{
+        transform: scale(1.03);
+        color:purple;
+    }
+    .but3 a.visited{
+        color:blue;
+    }
+
+    .but4{
+        font-family:'Roboto', sans-serif;
+        font-weight: bold;
+        font-style:italic;
+        transition: transform 0.3s ease;
+    }
+
+    .but4 a:hover{
+        color:purple;
+    }
+    .but4 a.visited{
+        color:blue;
+    }
+
+    .but5{
+        color:white;
+        transform: scale(1.03);
+    }
+
+
+</style>
+
+<body class="bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <a class="btn btn-light me-4 mt-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-bars" style="font-size:40px;"></i></a>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header" style="background-color: grey;">
+                <h5 class="offcanvas-title text-light" id="offcanvasWithBothOptionsLabel">EXPLORE</h5>
+                <button type="button" class="btn-close btn-light b1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body bg-dark">
+                <div class="d-flex flex-column mb-3">
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:home' %}" class="nav-link off-link">Anime</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:top' %}" class="nav-link off-link">Top Animes</a>
+                    </div>
+
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:trending' %}" class="nav-link off-link">Trending Animes</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'manga:all_manga' %}" class="nav-link off-link">Manga</a>
+                    </div>
+                    <div class="p-2 text-light">
+                        <a href="{% url 'anime:recom' %}" class="nav-link off-link">Recommendation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <a class="navbar-brand" href="{% url 'welcome' %}">
+          <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="100" height="80">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" style="margin-left:100px;" id="navbarSupportedContent">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
+           <li class="nav-item1">
+             <a class="nav-link active" style="color:#CA8787;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" aria-current="page" href="{% url 'anime:all_page' %}">HOME</a>
+           </li>
+
+           <li class="nav-item me-4">
+              <form class="but-search1 d-flex ms-4 mt-1 navbar-form" method="get" action="{% url 'search:manga_search' %}">
+                  <input class="form-control me-1" style="width:600px;" type="search" name="query" placeholder="Search" aria-label="Search">
+                  <button type="submit"><i class="fa-solid fa-magnifying-glass gla"></i></button>
+              </form>
+           </li>
+
+
+             {# method="get": This specifies that the form will use the GET method to submit data. The search term will be appended to the URL as a query parameter. #}
+
+             {# name="query": This gives the input field a name, which is necessary for Django to access the input value in the request.  #}
+
+
+            {% if user.is_authenticated %}
+            <li class="nav-item1 me-1">
+                <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:profile'%}">
+                       <span> PROFILE <i class="fa-solid fa-circle-user" style="color:grey;"></i></span>
+                </a>
+            </li>
+
+            <li class="nav-item1">
+                <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:logout' %}">LOGOUT</a>
+            </li>
+
+            {% else %}
+            <li class="nav-item1 me1">
+              <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:login' %}">Login</a>
+            </li>
+
+            <li class="nav-item1">
+              <a class="nav-link active" style="color:#EECEB9;-webkit-text-stroke: 0.8px black;font-size:18px;font-weight:bold;" href="{% url 'users:register' %}">Register</a>
+            </li>
+
+        {% endif %}
+          </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid mar_foot">
+    <main role="main">
+
+<div class="container text-light">
+    <div class="row">
+        <div class="col-md-4 mt-5 detail-image">
+            <h1 style="font-family: 'Roboto', sans-serif; font-style:italic;" class=" mb-3">{{ manga.title }}</h1>
+            <img src="{{ manga.images.jpg.image_url }}" alt="{{ manga.title }}" class="img-fluid">
+                <div class="p-2 d-flex but2 ms-1 mt-2 text-light">
+                    <a href="{% url 'manga:manga_pictures' manga.mal_id %}" class=""><i class="fa fa-download"></i>   Download {{manga.title}} Posters </a>
+                </div>
+        </div>
+        <div class="data-sec col-md-8 text-light" style="margin-top:60px;">
+            <h3 style="margin-top:10px;">English Title: {{ manga.title_english }}</h3>
+            <h4>Japanese Title: {{ manga.title_japanese }}</h4>
+            <p><strong>Type:</strong> {{ manga.type }}</p>
+            <p><strong>Chapters:</strong> {{ manga.chapters }}</p>
+            <p><strong>Volumes:</strong> {{ manga.volumes }}</p>
+            <p><strong>Status:</strong> {{ manga.status }}</p>
+            <p><strong>Publishing:</strong>
+                {% if manga.publishing %}
+                Yes
+                {% else %}
+                No
+                {% endif %}
+            </p>
+            <p><strong>Published:</strong> {{ manga.published.string }}</p>
+            <p><strong>Score:</strong> {{ manga.scored }}</p>
+            <p><strong>Scored by:</strong> {{ manga.scored_by }}</p>
+            <p><strong>Rank:</strong> {{ manga.rank }}</p>
+            <p><strong>Popularity:</strong> {{ manga.popularity }}</p>
+            <p><strong>Members:</strong> {{ manga.members }}</p>
+            <p><strong>Favorites:</strong> {{ manga.favorites }}</p>
+            <p><strong>Synopsis:</strong> {{ manga.synopsis }}</p>
+            <p><strong>Background:</strong> {{ manga.background }}</p>
+            <p><strong>Authors:</strong>
+                {% for author in manga.authors %}
+                   <a href="{{ author.url }}" style="color:white;">{{ author.name }}</a> {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p><strong>Serializations:</strong>
+                {% for serializations in manga.serializations %}
+                   <span style="font-style:italic; margin-left:4px;"> type: </span> {{ serializations.type }}{% if not forloop.last %}, {% endif %}
+                   <span style="font-style:italic; margin-left:12px;"> name: </span> {{ serializations.name }}{% if not forloop.last %}, {% endif %}
+
+                {% endfor %}
+            </p>
+            <p><strong>Genres:</strong>
+                {% for genre in manga.genres %}
+                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Themes:</strong>
+                {% for theme in manga.themes %}
+                    {{ theme.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p><strong>Demographics:</strong>
+                {% for demographic in manga.demographics %}
+                    {{ demographic.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+        <div class="mt-4">
+            <h3 class="text-light">Characters:</h3>
+            <div class="row">
+                {% for character in visible_characters %}
+                    <div class="col-md-3 mb-3 character-container">
+                        <a href="{% url 'manga:character_details' character.character.mal_id %}" class="character-link">
+                            <div class="character-box">
+                                <img src="{{ character.character.images.jpg.image_url }}" alt="{{ character.character.name }}" class="character-img">
+                                <p class="text-center text-light character-name">{{ character.character.name }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if total_characters > 20 %}
+                <div class="text-center more_character mt-3" style="margin-left:300px;">
+                    <a href="{% url 'manga:more_characters' manga.mal_id %}" class="d-flex mb-4">View More Characters >></a>
+                </div>
+            {% endif %}
+        </div>
+
+
+<!--               {% if manga.relations %}-->
+<!--                <h3 class="text-light mt-4">Related Anime:</h3>-->
+<!--                <div class="row">-->
+<!--                    {% for relation in manga.relations %}-->
+<!--                        <h4 class="text-light">{{ relation.relation }}</h4>-->
+<!--                        {% if relation.entry %}-->
+<!--                            {% for entry in relation.entry %}-->
+<!--                                <div class="col-md-2 mb-3">-->
+<!--                                    <img src="{{ entry.images.jpg.image_url }}" alt="{{ entry.name }}" class="img-fluid rounded-circle">-->
+<!--                                    <p class="text-center text-light">{{ entry.name }}</p>-->
+<!--                                </div>-->
+<!--                            {% endfor %}-->
+<!--                        {% endif %}-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <p class="text-center text-light">No related anime found.</p>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+
+
+
+        </div>
+
+        </div>
+
+<!--        <div class="p-2 d-flex justify-content-center news-but1 text-light">-->
+<!--            <a href="{% url 'news:news' manga.mal_id %}" class=""><i class="fa-regular fa-newspaper"></i> Check Related Manga News</a>-->
+<!--        </div>-->
+
+
+</div>
+
+    </main>
+
+    <div class="container-fluid mt-5 mb-4">
+        <a class="navbar-brand" href="{% url 'welcome' %}">
+            <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="90" height="70">
+        </a>
+        <span style="border-left: 2px solid #ccc; height: 20px; margin-right: 10px; box-sizing: border-box;"></span>
+        <a class="navbar-brand" href="#">
+            <i class="fa-brands fa-discord" style="color: #74C0FC;"></i>
+        </a>
+        <a class="navbar-brand" href="#">
+            <i class="fa-brands fa-instagram" style="color:#c43556;"></i>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm">
+                    <h2 style="display: inline-block; margin-right: 10px;">A-Z LIST</h2>
+                    <span style="border-left: 2px solid #ccc; height: 20px; margin-right: 10px;"></span>
+                    <span>Search anime by alphabet name A to Z.</span> <br>
+                    <div class="my-2">
+                        <a class="btn btn-secondary"><h4>0-9</h4></a>
+                        <a class="btn btn-secondary" style="height:51;padding:10px;"><h4><i class="fa-solid fa-hashtag"></i></h4></a>
+                        <a class="btn btn-secondary"><h4>A-Z</h4></a>
+                        <i class="fa-brands fa-searchengin fa-2xl ms-3"></i>
+                    </div>
+                    <div class="my-4">
+                        <a>Terms of Service</a> | <a>DMCA</a> | <a>Contact</a> | <a>anymX App</a>
+                    </div>
+                    <p class="foot_text mt-4">anymX does not store any files on our server. The files belong to the respective owner.</p>
+                    <p class="foot_text">&copy; anymX.com. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</body>
+</html>

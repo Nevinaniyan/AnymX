@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Posters for {{manga.title}}
+{% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        background-color: #343a40;
+        border: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card img {
+        border-radius: 5px;
+        height:100%;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        text-align: center;
+        height:400px;
+    }
+    .card-body1{
+        text-align: center;
+    }
+
+    .default-text {
+        color: white;
+        font-size: 18px;
+    }
+
+    .back1 {
+        margin-top: 40px;
+    }
+</style>
+
+<body class="bg-dark">
+    <div class="container text-light">
+        <h1 class="mt-5 mb-2 text-center" style="font-family: 'Roboto', sans-serif; font-style:italic;">Download Your Favourite Posters</h1>
+        <div class="row">
+            {% for picture in picture %}
+                <div class="col-md-3 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ picture.jpg.image_url }}" alt="Manga Picture" class="card-img-top img-fluid">
+                        </div>
+                    </div>
+
+                   <div class="card-body1">
+                        <a href="{{ picture.jpg.image_url }}" download class="btn btn-danger mt-3" style="border-radius:4px;">
+                            <i class="fa fa-download"></i> Download
+                        </a>
+                   </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="text-center back1">
+        <a href="{% url 'manga:manga_details' manga_id=manga.mal_id %}" class="btn btn-info">
+            <i class="fa-solid fa-circle-info"></i> Back to {{manga.title}}
+        </a>
+    </div>
+
+
+</body>
+{% endblock %}

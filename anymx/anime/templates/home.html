@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<style>
+.pag1 {
+    margin-top: 20px;
+}
+
+.pag1 .step-links {
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+    border: 1px solid grey;
+    padding:10px;
+}
+
+.pag1 .step-links a {
+    color: black;
+    padding: 4px 4px;
+    margin: 0 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pag1 .step-links a:hover {
+    background-color: purple;
+    border-color: #ff4500;
+    color: #ffffff;
+}
+
+.pag1 .step-links .current {
+    color: white;
+    font-weight: bold;
+    margin: 0 10px;
+
+
+}
+
+.pag1 .step-links i {
+    margin: 0 2px;
+
+}
+
+
+.pag1 .step-links i {
+    color: #ffffff;
+}
+
+.pag1 .step-links a:hover i {
+    color: #ffffff;
+}
+    .pag1 a{
+    text-decoration:none;
+    color:white;
+    }
+    .pag1 a:visited{
+    color:purple;
+    }
+
+</style>
+<body class="bg-dark">
+
+    <div class="container-fluid" style="margin-top:100px;">
+        <div class="row ms-4">
+            {% for anime in anime_list %}
+            <div class="col-md-3 mb-3 top-flex">
+                <div class="card card_top border border-light border-1 rounded-1 anime1" style="width: 18rem;">
+                    <img src="{{ anime.images.jpg.image_url }}" alt="{{ anime.title }}" class="card-img-top" height="400px;">
+                    <div class="card-body content_top">
+                        <h5 class="card-title title_top">
+                            {% if anime.title_english %}
+                            {{ anime.title_english }}
+                            {% else %}
+                            {{ anime.title }}
+                            {% endif %}
+                        </h5>
+                        <a href="{% url 'anime:details' anime.mal_id %}" class="btn btn-danger top_b-font">Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pagination d-flex justify-content-center pag1 mt-5">
+        <span class="step-links text-light">
+            {% if pagination_info.has_previous_page %}
+                <a href="?page=1" title="First">&laquo; <i class="fa-solid fa-backward"></i></a>
+                <a href="?page={{ pagination_info.current_page|add:'-1' }}" title="Previous">| <i class="fa-solid fa-backward-step"></i></a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ pagination_info.current_page }} of {{ pagination_info.last_visible_page }}.
+            </span>
+
+            {% if pagination_info.has_next_page %}
+                <a href="?page={{ pagination_info.current_page|add:'1' }}" title="Next"><i class="fa-solid fa-forward-step"></i> |</a>
+                <a href="?page={{ pagination_info.last_visible_page }}" title="Last"><i class="fa-solid fa-forward"></i> &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+{% endblock %}
+
+
+

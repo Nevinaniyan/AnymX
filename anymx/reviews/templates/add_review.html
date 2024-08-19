@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Write a Review
+{% endblock %}
+
+{% block content %}
+<style>
+
+.form-group {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight:bold;
+}
+
+.form-group textarea {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.form-group textarea:hover {
+    background-color: white;
+}
+
+textarea.form-control {
+    height: 200px;
+    width: 100%;
+    border-radius: 5px;
+
+    }
+
+.cover_gif button {
+    width: 40%;
+    background-color: white;
+    border-color: black;
+    color: black;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left:25%;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.cover_gif button:hover {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight:bold;
+    color:white;
+    text-shadow: 0px 0px 2px black;
+}
+.cover_gif{
+      border: 1px solid black;
+      background: url("{% static 'videos/light.gif' %}");
+      color:white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px black;
+      background-size: cover;
+      background-position: center;
+      padding:20px;
+      margin: 50px auto;
+      margin-top:20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 600px;
+      margin: 50px auto;
+}
+.cover_gif h1{
+  font-weight:bold;
+  text-shadow: 0px 0px 2px black;
+  margin-bottom:20px;
+  margin-top:40px;
+  color:white;
+}
+</style>
+
+<body class="bg-dark">
+<div class="review-container cover_gif text-dark">
+    <h1 class="fs-3">Write a Review for {{ anime.title }}</h1>
+
+            {% if messages %}
+            <div class="alert-container mb-4">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.rating.label_tag }}
+            {{ form.rating }}
+        </div>
+        <div class="form-group form_area">
+            {{ form.review_text.label_tag }}
+            {{ form.review_text }}
+        </div>
+        <button type="submit" class="">Submit</button>
+    </form>
+    <a href="{% url 'anime:details' anime.mal_id %}" class="back-link">Back to Anime Details</a>
+</div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ character.name }} - Details
+{% endblock %}
+
+{% block content %}
+<style>
+
+    .character-image1 {
+        width: 250px;
+        height: 352px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        overflow: hidden;
+        border-radius: 10px;
+        background-color:#1E201E;
+    }
+
+    .character-image1 img {
+        width: 100%;
+        height: 100%;
+        margin-top:4px;
+        object-fit: cover;
+    }
+
+    .character-image1:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+    }
+
+    .character-details {
+        padding: 20px;
+        background-color: #1E201E
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .character-details p {
+        font-size: 16px;
+        color: #ddd;
+        margin-bottom: 10px;
+    }
+
+    .character-details p strong {
+        color: #fff;
+    }
+
+    .character-details h1 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        color: #ffcc00;
+    }
+
+    .character-details a {
+        text-decoration: none;
+        color: #ffcc00;
+        transition: color 0.3s ease;
+    }
+
+    .character-details a:hover {
+        color: #ff9900;
+    }
+
+    .voice-actor-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        margin-right: 10px;
+    }
+
+    .anime-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        margin-right: 10px;
+    }
+
+    .list-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .bg-custom {
+        background-color: #232D3F;
+    }
+</style>
+
+<body class="bg-dark">
+<div class="container text-light">
+    <h1 class="text-center m-4">{{ character.name }}</h1>
+    <div class="row">
+        <div class="col-md-4 character-image1">
+            <img src="{{ character.images.jpg.image_url }}" alt="{{ character.name }}">
+        </div>
+
+        <div class="col-md-8 character-details">
+            <p><strong>Name:</strong> {{ character.name }}</p>
+            <p><strong>Nickname:</strong>
+                {% if character.nicknames %}
+                    {% for nickname in character.nicknames %}
+                        {{ nickname }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% else %}
+                    Not Available
+                {% endif %}
+            </p>
+            <p><strong>Favorites:</strong> {{ character.favorites }}</p>
+            <p><strong>About:</strong> {{ character.about }}</p>
+
+            <div class="mt-5">
+                <p class="mb-2"><strong>Anime:</strong></p>
+                {% if character.anime %}
+                    {% for item in character.anime %}
+                    <div class="list-item">
+                        <a href="{% url 'anime:details' anime_id=item.anime.mal_id %}" class="text-light d-flex align-items-center">
+                            <img src="{{ item.anime.images.jpg.image_url }}" class="anime-img" alt="{{ item.anime.title }}">
+                            {{ item.anime.title }} ({{ item.role }})
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Not Available</p>
+                {% endif %}
+            </div>
+
+            <div class="mt-5">
+                <p class="mb-2"><strong>Manga:</strong></p>
+                {% if character.manga %}
+                    <ul>
+                        {% for item in character.manga %}
+                            <li class="list-item">
+                                <a href="{{ item.manga.url }}" class="text-light">{{ item.manga.title }} ({{ item.role }})</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Not Available</p>
+                {% endif %}
+            </div>
+
+            <div class="mt-5">
+                <p class="mb-2"><strong>Voice Actors:</strong></p>
+                {% if character.voices %}
+                    <ul>
+                        {% for voice in character.voices %}
+                            <li class="list-item">
+                                <a href="{{ voice.person.url }}" class="text-light d-flex align-items-center">
+                                    <img src="{{ voice.person.images.jpg.image_url }}" alt="{{ voice.person.name }}" class="voice-actor-img">
+                                    {{ voice.person.name }} ({{ voice.language }})
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Not Available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

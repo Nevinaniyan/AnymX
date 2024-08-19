@@ -1,0 +1,391 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Recommendation
+{% endblock %}
+
+{% block content %}
+
+<style>
+.container {
+    width: 100%;
+    height: 100%;
+    background-color: #606676;
+    border-radius:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.anime-section {
+    padding: 30px;
+    background: linear-gradient(135deg, #495057 10%, #343a40 10%);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
+}
+
+.anime-section h1 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-family: fantasy;
+    font-size: 48px;
+    color: #f8f9fa;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.most-popular {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(52, 58, 64, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.most-popular h2 {
+    width: 100%;
+    text-align: center;
+    font-family: 'Fantasy', sans-serif;
+    font-size: 35px;
+    color: #f8f9fa;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #adb5bd;
+}
+
+.popular-card {
+    position: relative;
+    width: 220px;
+    height: 340px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+}
+
+.popular-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+}
+
+.popular-card img {
+    width: 100%;
+    height: 85%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.popular-card:hover img {
+    transform: scale(1.03);
+}
+
+.anime-title {
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f8f9fa;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+    z-index: 5;
+    margin-bottom: 4px;
+}
+
+.num_card {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    z-index: 10;
+    opacity:0.8;
+    -webkit-text-stroke:0.8px black;
+}
+
+
+.manga-section {
+    padding: 30px;
+    background: linear-gradient(135deg, #adb5bd 10%, #3C3D37 10%);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
+}
+
+.manga-section h1 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-family: fantasy;
+    font-size: 48px;
+    color: #f8f9fa;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+</style>
+
+<body class= "bg-dark" style="background-color:#606676;">
+<div class="container">
+
+<div class="anime-section">
+    <h1>Anime Recommendations</h1>
+    <div class="most-popular row">
+    <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">All-Time Popular</h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">DragonBall Z</div>
+                <a href="{% url 'anime:details' 831 %}">
+                    <img src="{% static 'images/dragonballzpopular.jpg' %}" alt="DragonBall Z">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.8;-webkit-text-stroke:0.6px white;">01</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">One Piece</div>
+                <a href="{% url 'anime:details' 21 %}">
+                    <img src="{% static 'images/ONE PIECE WALLPAPER_trending.jpg' %}" alt="One Piece">
+                </a>
+                <span class="num_card" style="color:white;">02</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Pokemon</div>
+                <a href="{% url 'anime:details' 527 %}">
+                    <img src="{% static 'images/pokemon_popular.jpg' %}" alt="Pokemon">
+                </a>
+                <span class="num_card" style="color:white;">03</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Naruto:Shippuden</div>
+                <a href="{% url 'anime:details' 1735 %}">
+                    <img src="{% static 'images/Naruto_Shippuden_popular.jpg' %}" alt="Naruto:Shippuden">
+                </a>
+                <span class="num_card" style="color:white;">04</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Demon Slayer</div>
+                <a href="{% url 'anime:details' 38000 %}">
+                    <img src="{% static 'images/kimetsunoyaiba_popular.jpg' %}" alt="Demon Slayer">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.6;-webkit-text-stroke:0.6px white;">05</span>
+            </div>
+    </div>
+
+        <div class="most-popular row">
+            <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">Trending <span style="color:red;">Top 5</span></h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">One Piece</div>
+                <a href="{% url 'anime:details' 21 %}">
+                    <img src="{% static 'images/ONE PIECE WALLPAPER_trending.jpg' %}" alt="One Piece">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.6;-webkit-text-stroke:0.6px white;">01</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">My Hero Academia</div>
+                <a href="{% url 'anime:details' 54789 %}">
+                    <img src="{% static 'images/mhac-7.jpg' %}" alt="My hero academia">
+                </a>
+                <span class="num_card" style="color:white;">02</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Demon Slayer</div>
+                <a href="{% url 'anime:details' 55701 %}">
+                    <img src="{% static 'images/demon_slayer_trending.jpg' %}" alt="Demon slayer">
+                </a>
+                <span class="num_card" style="color:white;">03</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Wind Breaker</div>
+                <a href="{% url 'anime:details' 54900  %}">
+                    <img src="{% static 'images/Windbreaker (Anime)trending.jpg' %}" alt="Wind Breaker">
+                </a>
+                <span class="num_card" style="color:white;">04</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:17px;margin-bottom:6px;">ChainSaw Man: Movie</div>
+                <a href="{% url 'anime:details' 57555 %}">
+                    <img src="{% static 'images/chainsaw.jpg' %}" alt="chainsaw man">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.6;">05</span>
+            </div>
+    </div>
+
+            <div class="most-popular row">
+            <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">All-Time Classics</h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:15px; margin-bottom:9.5px;">Fist of the Northern Star</div>
+                <a href="{% url 'anime:details' 967 %}">
+                    <img src="{% static 'images/Fist Of The North Star (1986).jpg' %}" alt="Fist of the Northern Star">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:16px;margin-bottom:7.5px;">Neon Genesis Evangelion</div>
+                <a href="{% url 'anime:details' 30 %}">
+                    <img src="{% static 'images/Neon Genesis Evangelion (1995).jpg' %}" alt="Neon Genesis Evangelion">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:17px;margin-bottom:6px;">Mobile Suit Gundam</div>
+                <a href="{% url 'anime:details' 80 %}">
+                    <img src="{% static 'images/mobilesuitgundam1979.jpg' %}" alt="Mobile Suit Gundam">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="margin-bottom:2px;">CowBoy Bebop</div>
+                <a href="{% url 'anime:details' 1  %}">
+                    <img src="{% static 'images/cowboybebop.jpg' %}" alt="Cowboy Bebop">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title ms-1" style="margin-bottom:2px;">Akira</div>
+                <a href="{% url 'anime:details' 47 %}">
+                    <img src="{% static 'images/Akira-1998.jpg' %}" alt="Akira">
+                </a>
+            </div>
+    </div>
+
+</div>
+
+<div class="manga-section">
+    <h1>Manga Recommendations</h1>
+    <div class="most-popular row">
+    <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">All-Time Popular</h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Berserk</div>
+                <a href="{% url 'manga:manga_details' 2 %}">
+                    <img src="{% static 'images/Berserk_manga.jpg' %}" alt="Berserk">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.8;-webkit-text-stroke:0.6px white;">01</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:15px; margin-bottom:9px;">Jojo's Bizarre Adventures</div>
+                <a href="{% url 'manga:manga_details' 872 %}">
+                    <img src="{% static 'images/August_21_1989_jjba.jpg' %}" alt="JJBA">
+                </a>
+                <span class="num_card" style="color:white;">02</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Vagabond</div>
+                <a href="{% url 'manga:manga_details' 656 %}">
+                    <img src="{% static 'images/Vagabond, Vol_ 1.jpg' %}" alt="Vagabond">
+                </a>
+                <span class="num_card" style="color:white;">03</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Full Metal Alchemist</div>
+                <a href="{% url 'manga:manga_details' 25 %}">
+                    <img src="{% static 'images/fmal_manga.jpg' %}" alt="Full Metal Alchemist">
+                </a>
+                <span class="num_card" style="color:white;">04</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">One Piece</div>
+                <a href="{% url 'manga:manga_details' 13 %}">
+                    <img src="{% static 'images/one piece_manga.jpg' %}" alt="One Piece">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.8;-webkit-text-stroke:0.6px white;">05</span>
+            </div>
+    </div>
+
+        <div class="most-popular row">
+            <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">Trending <span style="color:red;">Top 5</span></h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Sakamoto Days</div>
+                <a href="{% url 'manga:manga_details' 131334  %}">
+                    <img src="{% static 'images/Sakamoto Days.jpg' %}" alt="Sakamoto Days">
+                </a>
+                <span class="num_card" style="color:black;-webkit-text-stroke:0.6px white;">01</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Chainsaw Man</div>
+                <a href="{% url 'manga:manga_details' 116778 %}">
+                    <img src="{% static 'images/chainsaw_manga.jpg' %}" alt="Chainsaw Man">
+                </a>
+                <span class="num_card" style="color:white;">02</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">One Piece</div>
+                <a href="{% url 'manga:manga_details' 13 %}">
+                    <img src="{% static 'images/one piece_manga.jpg' %}" alt="One Piece">
+                </a>
+                <span class="num_card" style="color:white;opacity:0.8;-webkit-text-stroke:0.8px black;">03</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">JJBA: Steel Ball Run</div>
+                <a href="{% url 'manga:manga_details' 1706 %}">
+                    <img src="{% static 'images/steel_ball_run.jpg' %}" alt="JJBA">
+                </a>
+                <span class="num_card" style="color:white;">04</span>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="font-size:17px;margin-bottom:6px;">Delicious In Dungeon</div>
+                <a href="{% url 'manga:manga_details' 85781 %}">
+                    <img src="{% static 'images/delicious_in_dungeon_trending_manga.jpg' %}" alt="Delicious In Dungeon<">
+                </a>
+                <span class="num_card" style="color:black;opacity:0.6;-webkit-text-stroke:0.6px white;">05</span>
+            </div>
+    </div>
+
+            <div class="most-popular row">
+            <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">All-Time Classics</h2>
+            <div class="popular-card col-sm-1">
+              <div class="anime-title" style="">Berserk</div>
+                <a href="{% url 'manga:manga_details' 2 %}">
+                    <img src="{% static 'images/Berserk_manga.jpg' %}" alt="Berserk">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Astro Boy</div>
+                <a href="{% url 'manga:manga_details' 728 %}">
+                    <img src="{% static 'images/astroboy.jpg' %}" alt="Astro Boy">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Dragon Ball</div>
+                <a href="{% url 'manga:manga_details' 42 %}">
+                    <img src="{% static 'images/dragonball_manga.jpg' %}" alt="Dragon Ball">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title">Dororo</div>
+                <a href="{% url 'manga:manga_details' 1658  %}">
+                    <img src="{% static 'images/Dororo.jpg' %}" alt="Dororo">
+                </a>
+            </div>
+
+            <div class="popular-card col-sm-1">
+              <div class="anime-title ms-1">Akira</div>
+                <a href="{% url 'manga:manga_details' 664 %}">
+                    <img src="{% static 'images/Akira.jpg' %}" alt="Akira">
+                </a>
+            </div>
+    </div>
+
+</div>
+
+</div>
+</body>
+
+{% endblock %}

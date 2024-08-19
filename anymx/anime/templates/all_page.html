@@ -1,0 +1,1156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    AnymX
+{% endblock %}
+
+{% block content %}
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color, #121212);
+    color: #fff;
+}
+
+.navbar{
+    background-color:transparent!important;
+}
+
+.for-all-page{
+    background-color:transparent;
+    border:none;
+    color:white;
+}
+
+/* dark_mode-light_mode */
+
+:root {
+    --background-color: #121212;
+}
+
+.light-mode .for-all-page{
+    background-color:transparent;
+    border:none;
+    color:black;
+}
+
+.light-mode {
+    --background-color: #F8EDE3;
+
+}
+
+.light-mode .bg-js{
+    background-color: #F8EDE3!important;
+}
+
+.light-mode .anime-title,
+.light-mode .movie-title,
+.light-mode .manga-title {
+    color: black;
+    font-weight:bold;
+    font-size:22px;
+    margin-top:10px;
+}
+
+.light-mode .det{
+    color:white;
+    -webkit-text-stroke: 1px black;
+}
+
+.light-mode .det:hover{
+    color:black;
+    -webkit-text-stroke: 2px white;
+}
+
+.light-mode .tr-js{
+    color: orange;
+    -webkit-text-stroke: 1px black;
+}
+
+.light-mode .trending-card img:hover, .movie-card img:hover, .manga-card img:hover{
+    border: 2px solid black;
+}
+
+.light-mode .spotlight-card {
+    border: 1.5px solid black;
+}
+
+/* dark_mode-light_mode */
+
+.spotlight-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    overflow:hidden;
+    justify-content:center;
+}
+
+.spotlight-card {
+    position: relative;
+    min-width: 1350px;
+    max-width: 1350px;
+    height: 550px;
+    margin-right: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid white;
+}
+
+.spotlight-card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.spotlight-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    z-index: 1;
+    background: linear-gradient(20deg, black, transparent), linear-gradient(80deg, black, transparent);
+    background-blend-mode: multiply;
+}
+
+.info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index:2
+}
+
+.info-overlay h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.details {
+    margin: 10px 0;
+    font-size: 0.9em;
+    z-index:2;
+}
+
+.icon {
+    margin-right: 10px;
+    z-index:2;
+}
+
+.description {
+    font-size: 0.9em;
+    z-index:2;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    z-index:2;
+}
+
+.detail {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    z-index:2;
+}
+
+
+.detail {
+    background-color: red;
+    color: #fff;
+    z-index:2;
+}
+
+@media (max-width: 768px) {
+    .spotlight-container {
+        flex-direction: column;
+    }
+
+    .spotlight-card {
+        max-width: none;
+        margin-bottom: 20px;
+    }
+}
+
+  /* for trending section */
+
+.trending-section, .movie-section, .manga-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-left:7px;
+}
+
+.trending-carousel, .movie-carousel, .manga-carousal {
+    display: flex;
+    align-items: center;
+}
+
+.trending-cards, .movie-cards, .manga-cards {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height:480px;
+}
+
+.trending-card, .movie-card, .manga-card {
+    min-width:300px;
+    height:450px;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-right:4px;
+    transition: transform 0.4s ease-in-out;
+    overflow: hidden;
+    position: relative;
+}
+
+.trending-card:hover, .movie-card:hover, .manga-card:hover {
+    transform: scale(1.02);
+}
+
+.trending-card img, .movie-card img, .manga-card img{
+    object-fit:cover;
+    height:100%;
+    width:100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.trending-card img:hover, .movie-card img:hover, .manga-card img:hover{
+    border: 2px solid white;
+}
+.anime-title, .movie-title{
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.manga-title{
+    margin-top:10px;
+    font-size:25px;
+}
+
+.movie-title-tgwltt{
+    font-size: 17px;
+    margin-top: 12px;
+    margin-bottom: 2px;
+}
+
+.arrow {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size:20px;
+    border: none;
+    border-radius:5px;
+    padding: 15px;
+    cursor: pointer;
+    margin-right:12px;
+    transition: transform 0.4s ease-in-out;
+}
+
+.arrow:hover{
+    transform: scale(1.05);
+    background-color: black;
+}
+
+.next {
+    right: 0;
+    top: 30%;
+}
+.prev {
+    right: 0;
+    bottom: 10%;
+}
+
+.next1 {
+    right: 0;
+    top: 30%;
+}
+.prev1 {
+    right: 0;
+    bottom: 10%;
+}
+
+.look-into {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.look-row {
+    width: 75%;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.look-anime, .look-manga {
+    position: relative;
+    width: 48%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.look-anime img, .look-manga img {
+    width: 85%;
+    height: 100%;
+    display: block;
+    transition: transform 0.8s ease-in-out;
+}
+
+.look-anime img:hover, .look-manga img:hover {
+    transform: scale(1.05);
+}
+
+.det {
+    text-decoration: none;
+    color: black;
+    -webkit-text-stroke: 1px white;
+    border: none;
+    cursor: pointer;
+    font-size: 70px;
+    text-transform: uppercase;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+.det-anime {
+    margin-right: 5px;
+    transform: rotate(180deg);
+    font-size:80px;
+    transition: transform 0.8 ease-in-out;
+}
+
+.det-anime:hover,.det-manga:hover{
+    color:white;
+    -webkit-text-stroke: 1.5px black;
+
+}
+
+.num_card{
+    left:22%;
+    bottom:80%;
+    font-family:fantasy;
+    position:relative;
+    font-size:150px;
+    opacity:0.6;
+}
+
+/* Bottom */
+.anime-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: #1A2130;
+    color: #fff;
+}
+
+.section {
+    flex: 1;
+    background-color: #2c2f48;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.section h2 {
+    font-size: 24px;
+    color: #ff9a9e;
+    margin-bottom: 15px;
+    font-family: fantasy;
+}
+
+.anime-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.anime-card {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.anime-card img {
+    width: 50px;
+    height: 70px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.anime-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.anime-info h3 {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.anime-type {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.view-more {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: right;
+    color: #ff9a9e;
+    text-decoration: none;
+}
+
+.view-more:hover {
+    color: white;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.anime-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+</style>
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+
+    // Applying the current theme from localStorage
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-mode');
+        themeToggleBtn.textContent = '  Nox'; // Set button text for light mode
+    } else {
+        themeToggleBtn.textContent = '  Lumos'; // Set button text for dark mode
+    }
+
+    themeToggleBtn.addEventListener('click', function () {
+        document.body.classList.toggle('light-mode');
+        const isLightMode = document.body.classList.contains('light-mode');
+
+        // Update localStorage and button text based on the current theme
+        const theme = isLightMode ? 'light' : 'dark';
+        localStorage.setItem('theme', theme);
+        this.textContent = isLightMode ? '  Nox' : '  Lumos';
+    });
+});
+
+
+</script>
+
+<div id="theme-toggle-container" style="position: absolute; top: 20px; right: 20px; z-index: 999; color:#914F1E;">
+    <i id="theme-toggle" class="fa-solid fa-wand-sparkles">Lumos</i>
+</div>
+
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/anime-look-up-op.gif' %}" alt="One Piece">
+          <div class="info-overlay">
+            <h2>One Piece</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>Oct 20, 1999</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 1116 on-going</span>
+            <p class="description">Gold Roger was known as the "Pirate King," the strongest and most infamous being to have sailed the Grand Line...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 21 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/demonslayerhsarc.gif' %}" alt="Demon Slayer">
+          <div class="info-overlay">
+            <h2>Demon Slayer: Kimetsu no Yaiba Hashira Training Arc</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24 - 40m</span> <span class="icon ms-2">📅<span>May 10, 2024</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 8 </span>
+            <p class="description">Following the intense Swordsmith Village arc, Tanjiro and his companions undergo rigorous training with the Hashira to prepare for their ultimate showdown with Muzan Kibutsuji.</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 55701 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/Sung Jin-Woo vs_ Igris on Make a GIF.gif' %}" alt="I Am the Shadow Reverend">
+          <div class="info-overlay">
+            <h2>Solo Leveling</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>May 12, 2024 to Jun 30, 2024</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 12 </span>
+            <p class="description">In a world where hunters — human warriors who possess supernatural abilities — must battle deadly monsters to protect mankind...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 52299 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/Boku No Hero Academia #GG #anime.gif' %}"  alt="MHAC 7">
+          <div class="info-overlay">
+            <h2>My Hero Academia Season 7</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>May 4, 2024 to ?</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 10-? </span>
+            <p class="description">With the young hero students contemplating whether they can save "villains", the Pro Heroes come together with a plan to divide and conquer the villains' side as the war between both sides to determine the fate of the world begins.</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 54789 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/chainsawman.gif' %}"  alt="Chainsawman">
+          <div class="info-overlay">
+            <h2>Chainsaw man</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>Oct 12, 2022 to Dec 28, 2022</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 12 </span>
+            <p class="description">Denji is robbed of a normal teenage life, his only companion is his pet, the chainsaw devil Pochita, with whom he slays devils for money that inevitably ends up in the yakuza's pockets. All Denji can do is dream...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 44511 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/black flash itadori vs hanami jujutsu kaisen gif.gif' %}"  alt="Shibuya Incident Arc">
+          <div class="info-overlay">
+            <h2>Jujutsu Kaisen 2nd Season</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>Jul 6, 2023 to Dec 28, 2023</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 23 </span>
+            <p class="description">The year is 2006, and the halls of Tokyo Prefectural Jujutsu High School echo with the endless bickering and intense debate between two inseparable best friends. Exuding unshakeable confidence, Satoru Gojou and Suguru Getou...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 51009 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/haikyuuuu.gif' %}"  alt="Haikyuu">
+          <div class="info-overlay">
+            <h2>Haikyuu! Dumpster Battle</h2>
+            <p class="details"><span class="icon">📺 <span>Movie</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>85m</span> <span class="icon ms-2">📅<span>May 31 2024</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 1 </span>
+            <p class="description">Karasuno High School made it through the Miyagi prefecture preliminaries for the Harutaka Volleyball Tournament, which was crowded with strong teams, and advanced to the third round by defeating Hyogo Prefecture representative Inarizaki High School...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 52742 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/konosuba.gif' %}"  alt="KONOSUBA Season 3">
+          <div class="info-overlay">
+            <h2>KonoSuba: God's Blessing on This Wonderful World! 3</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>Apr 10, 2024 to Jun 19, 2024</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 11 </span>
+            <p class="description">Kazuma Satou, former NEET and current reincarnated adventurer, finally returns home after the incident at the Crimson Demon village. He is joined by his ever-reliable companions: self-absorbed goddess Aqua, one-trick pony arch-wizard Megumin, and idiotic crusader Darkness...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 49458 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/aotgif.gif' %}"  alt="Attack on Titan">
+          <div class="info-overlay">
+            <h2>Attack on Titan: The Final Season Part 3</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>61m</span> <span class="icon ms-2">📅<span>Mar 4, 2023 to Nov 5, 2023</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 2 </span>
+            <p class="description">In the wake of Eren Yeager's cataclysmic actions, his friends and former enemies form an alliance against his genocidal rampage. Though once bitter foes,..</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 51535 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <div class="spotlight-container">
+        <div class="spotlight-card">
+          <img src="{% static 'videos/naruto.gif' %}" alt="Naruto Shippuden">
+          <div class="info-overlay">
+            <h2>Naruto: Shippuden</h2>
+            <p class="details"><span class="icon">📺 <span>Series</span></span> <span><i class="fa-solid fa-hourglass me-1"></i>24m</span> <span class="icon ms-2">📅<span>Feb 15, 2007 to Mar 23, 2017</span></span></p>
+            <p class="details"><span class="icon">EP</span> <span class="icon"> 500 </span>
+            <p class="description">It has been two and a half years since Naruto Uzumaki left Konohagakure, the Hidden Leaf Village, for intense training following events which fueled his desire to be stronger. Now Akatsuki, the mysterious organization of elite rogue ninja, is closing in on their ...</p>
+            <div class="buttons">
+              <a href="{% url 'anime:details' 1735 %}"><button class="detail">Details</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="m-0">
+    <h1 class=" d-flex justify-content-center" style="font-family:fantasy; color:red; font-size:30px; font-style:italic;">WELCOME WEEBS</h1>
+</div>
+
+<div class="look-into">
+  <div class="row look-row">
+    <div class="col-md ms-2 mb-2 look-anime">
+      <a href="{% url 'anime:home' %}" class="det det-anime">ANIME</a>
+      <img src="{% static 'images/anime-look-up-img.jpg' %}">
+    </div>
+
+    <div class="col-md look-manga mb-2">
+      <img src="{% static 'images/manga-look-up-2003.jpg' %}">
+      <a href="{% url 'manga:all_manga' %}" class="det det-manga">MANGA</a>
+    </div>
+  </div>
+</div>
+
+<div class="trending-section">
+    <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">Trending</h2>
+      <div class="trending-carousal">
+        <div class="trending-cards">
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">01</span>One Piece</div>
+                <a href="{% url 'anime:details' 21 %}">
+                    <img src="{% static 'images/ONE PIECE WALLPAPER_trending.jpg' %}" alt="One Piece">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">02</span>My Hero Academia</div>
+                <a href="{% url 'anime:details' 54789 %}">
+                    <img src="{% static 'images/mhac-7.jpg' %}" alt="My hero academia">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">03</span>Demon Slayer</div>
+                <a href="{% url 'anime:details' 55701 %}">
+                    <img src="{% static 'images/demon_slayer_trending.jpg' %}" alt="Demon slayer">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">04</span>Wind Breaker</div>
+                <a href="{% url 'anime:details' 54900  %}">
+                    <img src="{% static 'images/Windbreaker (Anime)trending.jpg' %}" alt="Wind Breaker">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">05</span>ChainSaw Man: Movie</div>
+                <a href="{% url 'anime:details' 57555 %}">
+                    <img src="{% static 'images/chainsaw.jpg' %}" alt="chainsaw man">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">06</span>Kaiju NO 8</div>
+                <a href="{% url 'anime:details' 52588 %}">
+                    <img src="{% static 'images/KAIJU NO 8_trending.jpg' %}" alt="kaiju no 8">
+                </a>
+            </div>
+
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">07</span>Bleach</div>
+                <a href="{% url 'anime:details' 41467 %}">
+                    <img src="{% static 'images/bleach_trending.jpg' %}" alt="bleach">
+                </a>
+            </div>
+
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">08</span>Your Name</div>
+                <a href="{% url 'anime:details' 32281 %}">
+                    <img src="{% static 'images/your_name_trending.jpg' %}" alt="your name">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">09</span>Solo Leveling</div>
+                <a href="{% url 'anime:details' 52299 %}">
+                    <img src="{% static 'images/I Am the Shadow Reverend.jpg' %}" alt="solo leveling">
+                </a>
+            </div>
+
+            <div class="trending-card">
+              <div class="anime-title"><span class="anime-rank me-1" style="color:red;">10</span>The Boy and the Heron</div>
+                <a href="{% url 'anime:details' 36699 %}">
+                    <img src="{% static 'images/the boy and the heron (2023)_trending.jpg' %}" alt="The boy and the heron">
+                </a>
+            </div>
+
+      </div>
+
+
+        <button class="arrow prev" disabled>&#10094;</button>
+        <button class="arrow next">&#10095;</button>
+
+</div>
+</div>
+
+
+<div class="manga-section">
+    <h2 class="mt-5 tr-js" style="font-family:fantasy; font-size:35px; margin-left:12px;">Manga</h2>
+      <div class="manga-carousal">
+        <div class="manga-cards">
+            <div class="manga-card">
+              <div class="manga-title">Berserk</div>
+                <a href="{% url 'manga:manga_details' 2 %}">
+                    <img src="{% static 'images/Berserk_manga.jpg' %}" alt="Berserk">
+                </a>
+                <span class="num_card" style="color:white;">01</span>
+            </div>
+
+        <div class="manga-card">
+          <div class="manga-title">JJBA: Steel Ball Run</div>
+            <a href="{% url 'manga:manga_details' 1706  %}">
+                <img src="{% static 'images/steel_ball_run.jpg' %}" alt="Steel ball run">
+            </a>
+            <span class="num_card" style="color:black;">02</span>
+        </div>
+
+        <div class="manga-card">
+          <div class="manga-title">Vagabond</div>
+            <a href="{% url 'manga:manga_details' 656  %}">
+                <img src="{% static 'images/Vagabond, Vol_ 1.jpg' %}" alt="Vagabond">
+            </a>
+            <span class="num_card" style="color:black;">03</span>
+        </div>
+
+        <div class="manga-card">
+          <div class="manga-title">Dragon Ball Super</div>
+            <a href="{% url 'manga:manga_details' 89734 %}">
+                <img src="{% static 'images/Dragon Ball Super, Vol_ 15.jpg' %}" alt="Dragon ball super">
+            </a>
+            <span class="num_card" style="color:black;">04</span>
+        </div>
+
+        <div class="manga-card">
+          <div class="manga-title">Hajime No Ippo</div>
+            <a href="{% url 'manga:manga_details' 7 %}">
+                <img src="{% static 'images/Hajime no Ippo 69.jpg' %}" alt="Hajime No Ippo">
+            </a>
+            <span class="num_card" style="color:white; opacity:0.8;">05</span>
+        </div>
+
+      </div>
+
+    </div>
+</div>
+
+
+<div class="movie-section">
+    <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">Movies</h2>
+      <div class="movie-carousal">
+        <div class="movie-cards">
+            <div class="movie-card">
+              <div class="movie-title"><span class="movie-rank me-1" style="color:red;">01</span>Your Name</div>
+                <a href="{% url 'anime:details' 32281 %}">
+                    <img src="{% static 'images/your_name_trending.jpg' %}" alt="Your name">
+                </a>
+            </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">02</span>A silent Voice</div>
+            <a href="{% url 'anime:details' 28851  %}">
+                <img src="{% static 'images/a silent voice poster.jpg' %}" alt="A silent voice">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">03</span>Weathering With You</div>
+            <a href="{% url 'anime:details' 38826 %}">
+                <img src="{% static 'images/weatheringwithyou.jpg' %}" alt="Weathering with you">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">04</span>Perfect Blue</div>
+            <a href="{% url 'anime:details' 437 %}">
+                <img src="{% static 'images/perfect_blue_tr.jpg' %}" alt="Perfect blue">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">05</span>Spirited Away</div>
+            <a href="{% url 'anime:details' 199 %}">
+                <img src="{% static 'images/spirited_away_tr.jpg' %}" alt="Spirited away">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">06</span>Princess Mononoke</div>
+            <a href="{% url 'anime:details' 164 %}">
+                <img src="{% static 'images/Princess Mononoke (1997)_tr.jpg' %}" alt="Princess Mononoke">
+            </a>
+        </div>
+
+
+        <div class="movie-card">
+          <div class="movie-title-tgwltt"><span class="movie-rank me-1" style="color:red;">07</span>The Girl Who Leapt Through Time</div>
+            <a href="{% url 'anime:details' 2236 %}">
+                <img src="{% static 'images/thegirlwho leapt throughttime.jpg' %}" alt="The girl who leapt through time">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">08</span>The Boy and the Heron</div>
+            <a href="{% url 'anime:details' 36699 %}">
+                <img src="{% static 'images/the boy and the heron (2023)_trending.jpg' %}" alt="The boy and the heron">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">09</span>Hotarubi No Mori E</div>
+            <a href="{% url 'anime:details' 10408 %}">
+                <img src="{% static 'images/Hotarubi no mori e.jpg' %}" alt="">
+            </a>
+        </div>
+
+        <div class="movie-card">
+          <div class="movie-title"><span class="movie-rank me-1" style="color:red;">10</span>ChainSaw Man: Movie</div>
+            <a href="{% url 'anime:details' 57555 %}">
+                <img src="{% static 'images/chainsaw.jpg' %}" alt="Chainsaw Man">
+            </a>
+        </div>
+
+    </div>
+
+
+        <button class="arrow prev1" disabled>&#10094;</button>
+        <button class="arrow next1">&#10095;</button>
+
+</div>
+</div>
+
+<div class="anime-container">
+    <div class="section top-anime">
+        <h2>Top Anime</h2>
+        <div class="anime-list">
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 21 %}">
+                    <img src="{% static 'images/ONE PIECE WALLPAPER_trending.jpg' %}" alt="One Piece">
+                </a>
+                <div class="anime-info">
+                    <h3>One Piece</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 16498 %}">
+                    <img src="{% static 'images/aot.jpg' %}" alt="Attack On Titan">
+                </a>
+                <div class="anime-info">
+                    <h3>Attack On Titan</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 37987 %}">
+                    <img src="{% static 'images/Violet Evergarden- The Movie (2020).jpg' %}" alt="Violet Evergarden">
+                </a>
+                <div class="anime-info">
+                    <h3>Violet Evergarden</h3>
+                    <span class="anime-type">OVA</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 38000 %}">
+                    <img src="{% static 'images/kimetsunoyaiba_popular.jpg' %}" alt="Demon Slayer">
+                </a>
+                <div class="anime-info">
+                    <h3>Demon Slayer</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 39486 %}">
+                    <img src="{% static 'images/Gintama.jpg' %}" alt="Gintama">
+                </a>
+                <div class="anime-info">
+                    <h3>Gintama:The Final</h3>
+                    <span class="anime-type">OVA</span>
+                </div>
+            </div>
+
+        </div>
+        <a href="{% url 'anime:top' %}" class="view-more">More &rarr;</a>
+    </div>
+
+    <div class="section trending">
+        <h2>Trending</h2>
+        <div class="anime-list">
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 21 %}">
+                    <img src="{% static 'images/ONE PIECE WALLPAPER_trending.jpg' %}" alt="One Piece">
+                </a>
+                <div class="anime-info">
+                    <h3>One Piece</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 54789 %}">
+                    <img src="{% static 'images/mhac-7.jpg' %}" alt="My hero academia">
+                </a>
+                <div class="anime-info">
+                    <h3>My Hero Academia</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 55701 %}">
+                    <img src="{% static 'images/demon_slayer_trending.jpg' %}" alt="Demon slayer">
+                </a>
+                <div class="anime-info">
+                    <h3>Demon Slayer: Hashira Arc</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 48585 %}">
+                    <img src="{% static 'images/Black Clover _ Sword Of The Wizard King.jpg' %}" alt="Black Clover">
+                </a>
+                <div class="anime-info">
+                    <h3>Black Clover:Movie</h3>
+                    <span class="anime-type">OVA</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'anime:details' 51009 %}">
+                    <img src="{% static 'images/_Shibuya Incident Arc_.jpg' %}" alt="JJK">
+                </a>
+                <div class="anime-info">
+                    <h3>JJK: Shibuya Incident Arc</h3>
+                    <span class="anime-type">TV</span>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'anime:trending' %}" class="view-more">More &rarr;</a>
+    </div>
+
+    <div class="section anime-manga">
+        <h2>Manga</h2>
+        <div class="anime-list">
+            <div class="anime-card">
+                <a href="{% url 'manga:manga_details' 872 %}">
+                    <img src="{% static 'images/August_21_1989_jjba.jpg' %}" alt="JJBA">
+                </a>
+                <div class="anime-info">
+                    <h3>Jojos Bizarre Adventures</h3>
+                    <span class="anime-type">Manga</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'manga:manga_details' 131334  %}">
+                    <img src="{% static 'images/Sakamoto Days.jpg' %}" alt="Sakamoto Days">
+                </a>
+                <div class="anime-info">
+                    <h3>Sakamoto Days</h3>
+                    <span class="anime-type">Manga</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'manga:manga_details' 1658  %}">
+                    <img src="{% static 'images/Dororo.jpg' %}" alt="Dororo">
+                </a>
+                <div class="anime-info">
+                    <h3>Dororo</h3>
+                    <span class="anime-type">Manga</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'manga:manga_details' 656 %}">
+                    <img src="{% static 'images/Vagabond, Vol_ 1.jpg' %}" alt="Vagabond">
+                </a>
+                <div class="anime-info">
+                    <h3>Vagabond</h3>
+                    <span class="anime-type">Manga</span>
+                </div>
+            </div>
+
+            <div class="anime-card">
+                <a href="{% url 'manga:manga_details' 23390 %}">
+                    <img src="{% static 'images/Aot_manga.jpg' %}" alt="Attack On Titan">
+                </a>
+                <div class="anime-info">
+                    <h3>Attack on Titan</h3>
+                    <span class="anime-type">Manga</span>
+                </div>
+            </div>
+
+        </div>
+        <a href="{% url 'manga:all_manga' %}" class="view-more">More &rarr;</a>
+    </div>
+</div>
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.trending-card');
+    const next = document.querySelector('.next');
+    const prev = document.querySelector('.prev');
+    const visibleCards = 5; // Number of cards visible at one time
+    const cardWidth = 100 / visibleCards; // Width of each card in percentage
+    let currentStart = 0; // Index of the first card currently visible
+
+    function updateButtons() {
+        console.log('Current Start:', currentStart);
+        console.log('Total Cards:', cards.length);
+        console.log('Next Button Disabled:', currentStart + visibleCards >= cards.length);
+
+        prev.disabled = currentStart === 0;
+        next.disabled = currentStart + visibleCards >= cards.length;
+    }
+
+    function updateView() {
+        const offset = -currentStart * cardWidth; // Shift by one card width
+        document.querySelector('.trending-cards').style.transform = `translateX(${offset}%)`;
+    }
+
+    next.addEventListener('click', function() {
+        if (currentStart + visibleCards < cards.length) {
+            currentStart++;
+            updateView();
+            updateButtons();
+        }
+    });
+
+    prev.addEventListener('click', function() {
+        if (currentStart > 0) {
+            currentStart--;
+            updateView();
+            updateButtons();
+        }
+    });
+
+    updateButtons(); // Initial button state
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.movie-card');
+    const next1 = document.querySelector('.next1');
+    const prev1 = document.querySelector('.prev1');
+    const visibleCards = 5; // Number of cards visible at one time
+    const cardWidth = 100 / visibleCards; // Width of each card in percentage
+    let currentStart = 0; // Index of the first card currently visible
+
+    function updateButtons() {
+        console.log('Current Start:', currentStart);
+        console.log('Total Cards:', cards.length);
+        console.log('Next Button Disabled:', currentStart + visibleCards >= cards.length);
+
+        prev1.disabled = currentStart === 0;
+        next1.disabled = currentStart + visibleCards >= cards.length;
+    }
+
+    function updateView() {
+        const offset = -currentStart * cardWidth; // Shift by one card width
+        document.querySelector('.movie-cards').style.transform = `translateX(${offset}%)`;
+    }
+
+    next1.addEventListener('click', function() {
+        if (currentStart + visibleCards < cards.length) {
+            currentStart++;
+            updateView();
+            updateButtons();
+        }
+    });
+
+    prev1.addEventListener('click', function() {
+        if (currentStart > 0) {
+            currentStart--;
+            updateView();
+            updateButtons();
+        }
+    });
+
+    updateButtons(); // Initial button state
+});
+
+
+</script>
+
+{% endblock %}

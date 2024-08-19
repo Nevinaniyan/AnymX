@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Top Anime
+{% endblock %}
+
+{% block content %}
+<style>
+    .pag2 a{
+    text-decoration:none;
+    color:white;
+    }
+    .pag2 a:visited{
+    color:purple;
+    }
+    .pag2 a:hover{
+    color:white;
+    }
+</style>
+<body class="bg-dark">
+
+<h1 class="text-light b-3 m-4 d-flex justify-content-center">Top Animes</h1>
+
+<div class="container-fluid">
+    <div class="row ms-4">
+        {% for anime in top_anime %}
+        <div class="col-md-3 mb-3 top-flex">
+            <div class="card card_top border border-light border-1 rounded-1 anime1" style="width: 18rem;">
+                <img src="{{ anime.images.jpg.image_url }}" alt="{{ anime.title }}" class="card-img-top" height="400px;">
+                <div class="card-body content_top">
+                    <h5 class="card-title title_top">
+                        {% if anime.title_english %}
+                        {{ anime.title_english }}
+                        {% else %}
+                        {{ anime.title }}
+                        {% endif %}
+                    </h5>
+                    <a href="{% url 'anime:details' anime.mal_id %}" class="btn btn-danger top_b-font">Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <div class="pagination d-flex justify-content-center pag2 mt-5">
+        <span class="step-links text-light">
+            {% if pagination_info.has_previous_page %}
+                <a href="?page=1" title="First">&laquo; <i class="fa-solid fa-backward"></i></a>
+                <a href="?page={{ pagination_info.current_page|add:'-1' }}" title="Previous">| <i class="fa-solid fa-backward-step"></i></a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ pagination_info.current_page }} of {{ pagination_info.last_visible_page }}.
+            </span>
+
+            {% if pagination_info.has_next_page %}
+                <a href="?page={{ pagination_info.current_page|add:'1' }}" title="Next"><i class="fa-solid fa-forward-step"></i> |</a>
+                <a href="?page={{ pagination_info.last_visible_page }}" title="Last"><i class="fa-solid fa-forward"></i> &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+</body>
+{% endblock %}

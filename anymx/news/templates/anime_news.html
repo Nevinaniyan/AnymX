@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Anime News
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #405D72;
+    }
+    .news-container {
+        background-color: #2c2c2c;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+    }
+    .news-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+    .news-image {
+        width: 100%;
+        height:800px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .news-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+    .news-meta {
+        font-size: 0.9em;
+        color: #b3b3b3;
+        margin-bottom: 10px;
+    }
+    .news-excerpt {
+        color: #e0e0e0;
+        margin-bottom: 10px;
+    }
+    .news-meta a {
+        color: #00aaff;
+        text-decoration: none;
+    }
+    .news-meta a:hover {
+        text-decoration: underline;
+    }
+    .news-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .back1{
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        font-style: italic;
+        margin-top:80px;
+        transition: transform 1s ease;
+    }
+    .back1:hover{
+        transform: scale(1.02);
+    }
+    .back1 a{
+        border-radius:8px;
+    }
+</style>
+
+<div class="container text-light">
+    <h1 class="text-center my-4" style="font-family: 'Roboto', sans-serif; font-style:italic;">Latest News</h1>
+    <div class="row">
+        {% for article in news %}
+        <div class="col-md-6 mb-4">
+            <div class="news-container">
+                    <img src="{{ article.images.jpg.image_url }}" alt="{{ article.title }}" class="news-image" data-default-src="{% static 'images/download.gif' %}">
+                <div class="news-title">{{ article.title }}</div>
+                <div class="news-meta">
+                    {% if article.author_url %}
+                        by <a href="{{ article.author_url }}" class="text-info">{{ article.author_username }}</a>
+                    {% else %}
+                        by {{ article.author_username }}
+                    {% endif %}
+                    on {{ article.date|date:"Y-m-d H:i:s" }}
+                </div>
+                <div class="news-excerpt">{{ article.excerpt }}</div>
+                <div class="news-meta">
+                    {% if article.url %}
+                        <a href="{{ article.url }}" class="text-info" target="_blank">Read more</a>
+                    {% endif %}
+                    {% if article.forum_url %}
+                        | <a href="{{ article.forum_url }}" class="text-info" target="_blank">Join discussion</a>
+                    {% endif %}
+                    <span class="float-right">{{ article.comments }} comments</span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+    <div class="text-center back1">
+        <a href="{% url 'anime:details' anime_id=anime_id %}" class="btn btn-info"><i class="fa-solid fa-circle-info"></i> Back to Anime Details</a>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.news-image');
+    images.forEach(img => {
+        img.onerror = function() {
+            this.src = this.getAttribute('data-default-src');
+        };
+    });
+});
+</script>
+{% endblock %}

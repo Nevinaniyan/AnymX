@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Anime Statistics
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.stat-item {
+    transition: transform 0.3s ease-in-out;
+}
+
+.stat-item:hover {
+    transform: scale(1.05);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.list-group-item {
+    font-family: 'Roboto', sans-serif;
+}
+</style>
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h2 class="mb-4" style="font-family:fantasy; font-weight: bold; -webkit-text-stroke: 0.8px black;">Statistics</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="stat-item p-3 mb-2 bg-light text-dark rounded">
+                    <h4>Watching</h4>
+                    <p class="stat-value">{{ data.watching }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-item p-3 mb-2 bg-secondary text-light rounded">
+                    <h4>Completed</h4>
+                    <p class="stat-value">{{ data.completed }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-item p-3 mb-2 bg-secondary text-light rounded">
+                    <h4>On Hold</h4>
+                    <p class="stat-value">{{ data.on_hold }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-item p-3 mb-2 bg-light text-dark rounded">
+                    <h4>Dropped</h4>
+                    <p class="stat-value">{{ data.dropped }}</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="stat-item p-3 mb-2 bg-primary text-light rounded">
+                    <h4>Plan to Watch</h4>
+                    <p class="stat-value">{{ data.plan_to_watch }}</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="stat-item p-3 mb-2 bg-danger text-light rounded">
+                    <h4>Total</h4>
+                    <p class="stat-value">{{ data.total }}</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mb-3" style="font-family: 'Roboto', sans-serif; font-weight: 500;">Scores Breakdown</h3>
+        <ul class="list-group">
+            {% for score in data.scores %}
+                <li class="list-group-item bg-light text-dark d-flex justify-content-between align-items-center">
+                    <span>Score {{ score.score }}</span>
+                    <span>{{ score.votes }} votes ({{ score.percentage }}%)</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+{% endblock %}
