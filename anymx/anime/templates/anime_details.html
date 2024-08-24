@@ -255,14 +255,14 @@
             <h1 style="font-family: 'Roboto', sans-serif; font-style:italic;" class=" mb-3">{{ anime.title }}
                         {% if user.is_authenticated %}
                     <a href="{% url 'favourites:add_to_favourites_anime' anime.mal_id %}" style="text-decoration:none;" title="Add to Favourites">
-                        <i class="fa-regular fa-heart" style="color:red;margin-left:4px; font-size: 30px;"></i>
+                        <i class="fa-solid fa-heart" style="color:red;margin-left:4px; font-size: 30px;"></i>
                     </a>
                     <a href="{% url 'watchlist:add_to_watchlist' anime.mal_id %}" style="text-decoration:none;" title="Add to Watchlist">
                         <i class="fa-solid fa-star" style="color:white; font-size: 30px;"></i>
                     </a>
                 {% else %}
-                    <a href="{% url 'users:login' %}" title="Add to Favourites"><i class="fa-regular fa-heart" style="font-size: 30px; color: red; margin-left: 4px;"></i></a>
-                    <a href="{% url 'users:login' %}" title="Add to Watchlist"><i class="fa-regular fa-star" style="font-size: 30px; color: yellow;"></i></a>
+                    <a href="{% url 'users:login' %}" title="Add to Favourites"><i class="fa-solid fa-heart" style="font-size: 30px; color: red; margin-left: 4px;"></i></a>
+                    <a href="{% url 'users:login' %}" title="Add to Watchlist"><i class="fa-solid fa-star" style="font-size: 30px; color: yellow;"></i></a>
                 {% endif %}
             </h1>
             <img src="{{ anime.images.jpg.image_url }}" alt="{{ anime.title }}" class="img-fluid">
