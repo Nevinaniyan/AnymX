@@ -443,7 +443,98 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Light Mode Styles */
 
+.light-mode .anime-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: #F8EDE3; /* Light background color */
+    color: #333; /* Darker text color for contrast */
+}
+
+.light-mode .section {
+    flex: 1;
+    background-color: #FFF; /* Light background for sections */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.light-mode .section h2 {
+    font-size: 24px;
+    color: #ff9a9e;
+    margin-bottom: 15px;
+    font-family: fantasy;
+}
+
+.light-mode .anime-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.light-mode .anime-card {
+    display: flex;
+    align-items: center;
+    background-color: #F0F0F0; /* Light background for anime cards */
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.light-mode .anime-card img {
+    width: 50px;
+    height: 70px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.light-mode .anime-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.light-mode .anime-info h3 {
+    font-size: 16px;
+    color: #333; /* Darker text color for contrast */
+    margin-bottom: 4px;
+}
+
+.light-mode .anime-type {
+    font-size: 12px;
+    color: #666; /* Lighter text color for subtle contrast */
+}
+
+.light-mode .view-more {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: right;
+    color: #ff9a9e;
+    text-decoration: none;
+}
+
+.light-mode .view-more:hover {
+    color: #333; /* Darker color on hover */
+}
+
+.light-mode .section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.light-mode .anime-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .welc-weeb{
+    -webkit-text-stroke: 1px black;
+}
 </style>
 
 
@@ -653,7 +744,7 @@ body {
 </div>
 
 <div class="m-0">
-    <h1 class=" d-flex justify-content-center" style="font-family:fantasy; color:red; font-size:30px; font-style:italic;">WELCOME WEEBS</h1>
+    <h1 class=" d-flex justify-content-center welc-weeb" style="font-family:fantasy; color:red; font-size:30px; font-style:italic;">WELCOME WEEBS</h1>
 </div>
 
 <div class="look-into">
