@@ -14,7 +14,12 @@ def all_page(request):
 
 
 def home(request):
-    page = request.GET.get('page', 1)  # Get the page number from the request
+    page = int(request.GET.get('page', 1))  # Get the page number from the request, default is 1
+    max_pages = 660  # Set the maximum number of pages
+
+    if page > max_pages:
+        page = max_pages
+
     try:
         response = requests.get(BASE_URL, params={
             'page': page,
@@ -40,11 +45,13 @@ def home(request):
             )
         ]
 
+        # Enforce pagination limits
+        total_pages = min(data['pagination']['last_visible_page'], max_pages)
         pagination_info = {
-            'current_page': data['pagination']['current_page'],
-            'has_next_page': data['pagination']['has_next_page'],
-            'has_previous_page': data['pagination']['current_page'] > 1,
-            'last_visible_page': data['pagination']['last_visible_page']
+            'current_page': page,
+            'has_next_page': page < total_pages and data['pagination']['has_next_page'],
+            'has_previous_page': page > 1,
+            'last_visible_page': total_pages
         }
 
         return render(request, 'home.html', {
@@ -69,7 +76,12 @@ def welcome(request):
 
 
 def top_anime(request):
-    page = request.GET.get('page', 1)
+    page = int(request.GET.get('page', 1))  # Get the page number from the request, default is 1
+    max_pages = 660  # Set the maximum number of pages
+
+    if page > max_pages:
+        page = max_pages
+
     try:
         data = get_anime(page)
 
@@ -91,11 +103,12 @@ def top_anime(request):
             )
         ]
 
+        total_pages = min(data['pagination']['last_visible_page'], max_pages)
         pagination_info = {
-            'current_page': data['pagination']['current_page'],
-            'has_next_page': data['pagination']['has_next_page'],
-            'has_previous_page': data['pagination']['current_page'] > 1,
-            'last_visible_page': data['pagination']['last_visible_page']
+            'current_page': page,
+            'has_next_page': page < total_pages and data['pagination']['has_next_page'],
+            'has_previous_page': page > 1,
+            'last_visible_page': total_pages
         }
 
         return render(request, 'top_anime.html', {
@@ -108,7 +121,11 @@ def top_anime(request):
 
 
 def trending_animes(request):
-    page = request.GET.get('page', 1)
+    page = int(request.GET.get('page', 1))
+    max_pages = 4
+
+    if page > max_pages:
+        page = max_pages
     try:
         data = get_trending_anime(page)
 
@@ -130,11 +147,12 @@ def trending_animes(request):
             )
         ]
 
+        total_pages = min(data['pagination']['last_visible_page'], max_pages)
         pagination_info = {
-            'current_page': data['pagination']['current_page'],
-            'has_next_page': data['pagination']['has_next_page'],
-            'has_previous_page': data['pagination']['current_page'] > 1,
-            'last_visible_page': data['pagination']['last_visible_page']
+            'current_page': page,
+            'has_next_page': page < total_pages and data['pagination']['has_next_page'],
+            'has_previous_page': page > 1,
+            'last_visible_page': total_pages
         }
 
         return render(request, 'trending_anime.html', {

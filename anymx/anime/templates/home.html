@@ -7,61 +7,95 @@
 
 {% block content %}
 <style>
-.pag1 {
-    margin-top: 20px;
-}
-
-.pag1 .step-links {
-    font-size: 1rem;
-    letter-spacing: 0.2px;
-    border: 1px solid grey;
-    padding:10px;
-}
-
-.pag1 .step-links a {
-    color: black;
-    padding: 4px 4px;
-    margin: 0 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.pag1 .step-links a:hover {
-    background-color: purple;
-    border-color: #ff4500;
-    color: #ffffff;
-}
-
-.pag1 .step-links .current {
-    color: white;
-    font-weight: bold;
-    margin: 0 10px;
-
-
-}
-
-.pag1 .step-links i {
-    margin: 0 2px;
-
-}
-
-
-.pag1 .step-links i {
-    color: #ffffff;
-}
-
-.pag1 .step-links a:hover i {
-    color: #ffffff;
-}
-    .pag1 a{
-    text-decoration:none;
-    color:white;
-    }
-    .pag1 a:visited{
-    color:purple;
+    .pag1 {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
+    .pag1 .step-links {
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+        border: 1px solid #6c757d;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background-color: #343a40;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .pag1 .step-links a {
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .pag1 .step-links a:hover {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #ffffff;
+    }
+
+    .pag1 .step-links .current {
+        color: #ffffff;
+        font-weight: bold;
+        margin: 0 10px;
+    }
+
+    .pag1 .step-links i {
+        color: #ffffff;
+    }
+
+    .pagination-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .pagination-input label {
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination-input input {
+        width: 60px;
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        background-color: #343a40;
+        color: #ffffff;
+        text-align: center;
+        margin-left: 5px;
+    }
+
+    .pagination-input input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    .pagination-input button {
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: #ffffff;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: bold;
+    }
+
+    .pagination-input button:hover {
+        background-color: #0056b3;
+        color: #ffffff;
+        border-color: #0056b3;
+    }
 </style>
 <body class="bg-dark">
 
@@ -88,7 +122,7 @@
     </div>
 
     <div class="pagination d-flex justify-content-center pag1 mt-5">
-        <span class="step-links text-light">
+        <span class="step-links">
             {% if pagination_info.has_previous_page %}
                 <a href="?page=1" title="First">&laquo; <i class="fa-solid fa-backward"></i></a>
                 <a href="?page={{ pagination_info.current_page|add:'-1' }}" title="Previous">| <i class="fa-solid fa-backward-step"></i></a>
@@ -104,8 +138,14 @@
             {% endif %}
         </span>
     </div>
+
+    <!-- Page Number Input Form -->
+    <div class="pagination-input mt-4">
+        <form action="" method="get">
+            <label for="page">Go to page:</label>
+            <input type="number" name="page" id="page" min="1" max="{{ pagination_info.last_visible_page }}" placeholder="1" required>
+            <button type="submit">Go</button>
+        </form>
+    </div>
 </body>
 {% endblock %}
-
-
-

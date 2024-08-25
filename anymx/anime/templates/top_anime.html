@@ -7,16 +7,96 @@
 
 {% block content %}
 <style>
-    .pag2 a{
-    text-decoration:none;
-    color:white;
+        .pag2 {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .pag2 a:visited{
-    color:purple;
+
+    .pag2 .step-links {
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+        border: 1px solid #6c757d;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background-color: #343a40;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
-    .pag2 a:hover{
-    color:white;
+
+    .pag2 .step-links a {
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border: 1px solid transparent;
     }
+
+    .pag2 .step-links a:hover {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #ffffff;
+    }
+
+    .pag2 .step-links .current {
+        color: #ffffff;
+        font-weight: bold;
+        margin: 0 10px;
+    }
+
+    .pag2 .step-links i {
+        color: #ffffff;
+    }
+
+    .pagination-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .pagination-input label {
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination-input input {
+        width: 60px;
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        background-color: #343a40;
+        color: #ffffff;
+        text-align: center;
+        margin-left: 5px;
+    }
+
+    .pagination-input input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    .pagination-input button {
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: #ffffff;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: bold;
+    }
+
+    .pagination-input button:hover {
+        background-color: #0056b3;
+        color: #ffffff;
+        border-color: #0056b3;
+    }
+
 </style>
 <body class="bg-dark">
 
@@ -61,7 +141,13 @@
             {% endif %}
         </span>
     </div>
-
+        <div class="pagination-input mt-4">
+        <form action="" method="get">
+            <label for="page">Go to page:</label>
+            <input type="number" name="page" id="page" min="1" max="{{ pagination_info.last_visible_page }}" placeholder="1" required>
+            <button type="submit">Go</button>
+        </form>
+    </div>
 
 </body>
 {% endblock %}

@@ -6,9 +6,18 @@ BASE_URL = "https://api.jikan.moe/v4/manga"
 
 
 def all_manga(request):
-    page = request.GET.get('page', 1)  # Get the page number from the request
+    page = int(request.GET.get('page', 1))
+    max_pages = 999
+
+    if page > max_pages:
+        page = max_pages  # Get the page number from the request
     try:
-        response = requests.get(BASE_URL, params={'page': page, 'limit': 24})  # setting a limit of 24 items per page.
+        response = requests.get(BASE_URL, params={
+            'page': page,
+            'limit': 24,
+            'order_by': 'scored_by',
+            'sort': 'desc'
+        })
         response.raise_for_status()
         data = response.json()
 
@@ -27,11 +36,12 @@ def all_manga(request):
             )
         ]
 
+        total_pages = min(data['pagination']['last_visible_page'], max_pages)
         pagination_info = {
-            'current_page': data['pagination']['current_page'],
-            'has_next_page': data['pagination']['has_next_page'],
-            'has_previous_page': data['pagination']['current_page'] > 1,
-            'last_visible_page': data['pagination']['last_visible_page']
+            'current_page': page,
+            'has_next_page': page < total_pages and data['pagination']['has_next_page'],
+            'has_previous_page': page > 1,
+            'last_visible_page': total_pages
         }
 
         return render(request, 'all_manga.html', {
