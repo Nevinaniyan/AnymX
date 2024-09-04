@@ -12,10 +12,155 @@
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:800,700&display=swap">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+.bod-bod{
+    margin: 0;
+    padding: 0;
+    overflow-x:hidden;
+    overflow-y:auto;
+
+}
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; /* Ensures it's behind other content */
+    object-fit: cover;
+}
+
+
+.tex {
+    position: relative;
+    z-index: 1; /* Ensures content is above the video */
+
+}
+
+.font-fam .nav-link {
+  font-family: 'Roboto', sans-serif;
+  color: #F7F9F2;
+  -webkit-text-stroke: 1.5px black;
+  font-size:35px;
+  transition: color 0.3s ease-in-out, transform 0.7s ease-in-out;
+}
+
+.font-fam :hover{
+   color: #D37676;
+   transform: scale(1.20);
+
+}
+
+.cont1 {
+
+    border-radius: 20px;
+    background-color: #403e5c;
+    /* padding: 20px; */
+    margin: 20px;
+    height: 500px;
+    width: 1300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.back-img1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+
+    border-radius: 20px;
+}
+
+
+.card-img-overlay {
+    z-index: 2;
+}
+
+
+#search1{
+
+    width:500px;
+    height:50px;
+    border-radius:10px;
+}
+
+.but-1{
+    width:50px;
+    border-radius:10px;
+
+}
+
+.jump{
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    padding:10px;
+    margin-top:60px;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+}
+
+#anymx{
+    height:100px;
+    width:200px;
+}
+
+
+#about {
+    background-color: rgb(32, 31, 49);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 1300px;
+    height: auto;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.textcol1 {
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: normal;
+    padding: 10px;
+    color: white;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cont1 {
+        padding: 10px;
+        height: 400px;
+        width:  500px;
+    }
+    #search1 {
+        width: 350px;
+    }
+    .jump {
+        width: 100px;
+        margin-top: 50px;
+    }
+    .axxa img{
+        height:30%;
+        width:30%;
+    }
+    #about{
+        margin: 10px auto;
+        padding: 10px;
+        height: auto;
+        width:  auto;
+    }
+}
+
+</style>
+
 </head>
-<body>
+<body class="bod-bod">
     <video autoplay muted loop id="video-background">
         <source src="{% static 'videos/welcome_page_2.mp4' %}" type="video/mp4">
     </video>
@@ -42,33 +187,30 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-left:80px;">
-        <div class="row mt-3">
-            <div class="col-12 col-md-10 col-lg-8">
-                <div class="card cont1">
-                    <img src="{% static 'images/jjk opening gif.gif' %}" class="card-img back-img1" alt="Background Image">
-
-                     <div class="card-img-overlay ms-1">
-                            <a class="navbar-brand" style="margin-left:45px;" href="{% url 'welcome' %}">
-                              <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="100" height="100">
-                            </a>
-                     </div>
-                    <div class="card-img-overlay d-flex align-items-center ms-4" style="margin-top:150px;">
-                          <div class="container-fluid">
-                            <form class="d-flex w-100" method="get" action="{% url 'search:search' %}">
-                              <input class="form-control me-2" id="search1" type="search" name="query" placeholder="Search anime" aria-label="Search anime">
-                              <button class="btn btn-danger but-1" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:black"></i></button>
-                            </form>
-                              <div class="">
-                              <a href="{% url 'anime:all_page' %}" class="btn btn-danger jump"> Jump <span><i class="fa-solid fa-arrow-right"></i></span></a>
-
-                              </div>
-                          </div>
+ <div class="container-fluid px-0 d-flex justify-content-center">
+    <div class="row mt-3 ">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card cont1">
+                <img src="{% static 'images/jjk opening gif.gif' %}" class="card-img back-img1" alt="Background Image">
+                <div class="card-img-overlay d-flex align-items-center">
+                    <div class="container-fluid axxa" style="margin-top:100px;">
+                        <a class="navbar-brand log12" href="{% url 'welcome' %}" style="top:30%;left:28.5%; position:absolute;">
+                            <img src="{% static 'images/for_all_page_logo1.png' %}" alt="" width="90" height="90">
+                        </a>
+                        <form class="d-flex justify-content-center my-3" method="get" action="{% url 'search:search' %}">
+                            <input class="form-control me-2" id="search1" type="search" name="query" placeholder="Search anime" aria-label="Search anime">
+                            <button class="btn btn-danger but-1" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:black"></i></button>
+                        </form>
+                        <div class="" style="position:absolute;left:28.5%;top:60%;">
+                        <a href="{% url 'anime:all_page' %}" class="btn btn-danger jump"> Jump <span><i class="fa-solid fa-arrow-right"></i></span></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     <div class="container-fluid" id="about">
         <div class="row">
@@ -96,4 +238,3 @@
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-

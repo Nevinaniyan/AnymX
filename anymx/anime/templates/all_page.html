@@ -91,19 +91,20 @@ body {
 
 .spotlight-card {
     position: relative;
-    min-width: 1350px;
-    max-width: 1350px;
+    width: 1350px;
     height: 550px;
     margin-right: 20px;
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid white;
+    flex-shrink:0;
 }
 
 .spotlight-card img {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    object-fit: cover
 }
 
 .spotlight-card::before {
@@ -172,14 +173,71 @@ body {
     z-index:2;
 }
 
+
+@media (max-width: 1200px) {
+    .spotlight-card {
+        max-width: 1000px; /* medium screens */
+        height: 450px;
+    }
+}
+
+@media (max-width: 992px) {
+    .spotlight-card {
+        max-width: 800px; /* smaller screens */
+        height: 400px;
+    }
+}
+
 @media (max-width: 768px) {
     .spotlight-container {
         flex-direction: column;
     }
 
     .spotlight-card {
-        max-width: none;
+        max-width: 100%; /small screens */
+        height: auto;
         margin-bottom: 20px;
+    }
+
+    .info-overlay h2 {
+        font-size: 1.3em;
+    }
+
+    .details {
+        font-size: 0.8em;
+    }
+
+    .description {
+        font-size: 0.8em;
+    }
+
+    .detail {
+        font-size: 0.8em;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .spotlight-card {
+        max-width: 100%; /* extra small screens */
+        height: auto;
+    }
+
+    .info-overlay {
+        padding: 10px;
+    }
+
+    .info-overlay h2 {
+        font-size: 1.2em;
+    }
+
+    .details, .description {
+        font-size: 0.75em;
+    }
+
+    .detail {
+        font-size: 0.75em;
+        padding: 6px 12px;
     }
 }
 
@@ -354,6 +412,81 @@ body {
     font-size:150px;
     opacity:0.6;
 }
+
+@media (max-width: 992px) {
+    .look-into {
+        height: auto;
+    }
+
+    .look-row {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+    }
+
+    .look-anime, .look-manga {
+        width: 100%;
+        height: 50%;
+        margin-bottom: 20px;
+    }
+
+    .look-anime img, .look-manga img {
+        width: 100%;
+        height: auto;
+    }
+
+    .det {
+        font-size: 50px;
+    }
+
+    .det-anime {
+        font-size: 60px;
+    }
+
+    .num_card {
+        font-size: 100px;
+        left: 10%;
+        bottom: 10%;
+    }
+}
+
+@media (max-width: 576px) {
+    .look-into {
+        height: auto;
+    }
+
+    .look-row {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .look-anime, .look-manga {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .look-anime img, .look-manga img {
+        width: 100%;
+        height: auto;
+    }
+
+    .det {
+        font-size: 40px;
+    }
+
+    .det-anime {
+        font-size: 50px;
+    }
+
+    .num_card {
+        font-size: 80px;
+        left: 5%;
+        bottom: 5%;
+    }
+}
+
 
 /* Bottom */
 .anime-container {
@@ -749,17 +882,18 @@ body {
 
 <div class="look-into">
   <div class="row look-row">
-    <div class="col-md ms-2 mb-2 look-anime">
+    <div class="col-sm look-anime ms-2 mb-2">
       <a href="{% url 'anime:home' %}" class="det det-anime">ANIME</a>
-      <img src="{% static 'images/anime-look-up-img.jpg' %}">
+      <img src="{% static 'images/anime-look-up-img.jpg' %}" class="img-anime">
     </div>
 
-    <div class="col-md look-manga mb-2">
-      <img src="{% static 'images/manga-look-up-2003.jpg' %}">
-      <a href="{% url 'manga:all_manga' %}" class="det det-manga">MANGA</a>
+    <div class="col-sm look-manga mb-2">
+      <img src="{% static 'images/manga-look-up-2003.jpg' %}" class="img-manga">
+        <a href="{% url 'manga:all_manga' %}" class="det det-manga">MANGA</a>
     </div>
   </div>
 </div>
+
 
 <div class="trending-section">
     <h2 class="mt-5 tr-js" style="font-family:fantasy; margin-left:12px; font-size:35px;">Trending</h2>
